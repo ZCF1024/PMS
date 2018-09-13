@@ -1,0 +1,41 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 13849063980
+
+  jpa:
+    hibernate:
+      ddl-auto: none  #  create-drop  如果实体对应的表已存在，先删除再创建，否则直接创建
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use-sql-comments: true
+
+  thymeleaf:
+      cache: false
+      check-template-location: true
+      prefix: classpath:/templates/
+      suffix: .html
+      content-type: text/html
+      enabled: true
+      encoding: utf-8
+      mode: HTML5
+      excluded-view-names:
+      template-resolver-order:
+
+
+server:
+  port: 8082
+#  context-path: /test
+
+debug: true
+logging:
+  level: warn
+#  file: log.txt
+page_size: 10
+
+save_file_path: C:\Users\Public\Downloads
+export_file_path: C:\Users\Public\Downloads

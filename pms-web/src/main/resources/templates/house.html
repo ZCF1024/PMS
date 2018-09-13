@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>物业管理系统</title>
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/vendor/skycons/css/skycons.css}" rel="stylesheet" />
+    <link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
+    <link th:href="@{/vendor/css/pace.preloader.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+
+    <link th:href="@{/css/jquery.mmenu.css}" rel="stylesheet" />
+
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <link th:href="@{/css/add_style.css}" rel="stylesheet" />
+</head>
+<body>
+
+<!-- Header-->
+<div th:replace="menu/header::header"></div>
+
+<!-- Start: Content -->
+<div class="container-fluid content">
+    <div class="row">
+        <!-- Sidebar -->
+        <div th:replace="menu/sidebar::sidebar"></div>
+
+        <!-- Main Page -->
+        <div class="main ">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="pull-left">
+                    <ol  id="headPath" class="breadcrumb visible-sm visible-md visible-lg">
+                        <li><a href="index.html"><i class="icon fa fa-home"></i>主页</a></li>
+                        <li class="active"><i class="fa fa-database"></i>基础数据</li>
+                        <li class="active"><i class="fa fa-anchor"></i>房源管理</li>
+                    </ol>
+                </div>
+                <div class="pull-right">
+                    <h2 id="rightContent">房源管理</h2>
+                </div>
+            </div>
+            <!-- End Page Header -->
+            <div class="center-block panel panel-info " style="min-height:520px;width:100%">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        房屋信息列表
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row clearfix">
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="input-group">
+                                <span class="hcpClass input-group-addon">小区</span>
+                                <div class="input-group" style="height:30px;">
+                                    <select ID="community" name="community" class="form-control" onchange="community_change(this.value)">
+                                        <option value="">请选择</option>
+                                        <option th:each="obj : ${communities}" th:value="${obj}" th:text="${obj}">${obj}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="input-group">
+                                <span class="hcpClass input-group-addon">楼号</span>
+                                <div class="input-group">
+                                    <select ID="building" name="building" class="form-control">
+                                        <option value="-999">请选择</option>
+                                        <option th:each="building : ${buildings}" th:value="${building}" th:text="${building}">${obj}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="input-group">
+                                <span class="hcpClass input-group-addon">户型</span>
+                                <div class="input-group">
+                                    <select ID="type" name="type" class="form-control">
+                                        <option value="">请选择</option>
+                                        <option th:each="type : ${types}" th:value="${type}" th:text="${type}">${obj}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div><br/>
+                    <div class="row clearfix">
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">房号</span>
+                                <input id="house_number" class="form-control" type="text" />
+                                <a id="a_clear" class="glyphicon glyphicon-remove btn form-control-feedback" style="pointer-events: auto"></a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">状态</span>
+                                <select id="state" name="state" class="form-control">
+                                    <option value="false" selected="selected">待租</option>
+                                    <option value="true">已被租</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="input-group">
+                                <button type="button" class="btn btn-primary" onclick="load_data(0)">查询</button>
+                            </div>
+                        </div>
+                    </div><hr/>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>小区</th>
+                            <th>坐落</th>
+                            <th>租户</th>
+                            <th>户型</th>
+                            <th>价位</th>
+                            <th>地址</th>
+                            <th>状态</th>
+                            <th>简介</th>
+                        </tr>
+                        </thead>
+                        <tbody id="my_tbody">
+                        <tr th:each="house : ${datas}">
+                            <td th:text="${house.community}">${house.community}</td>
+                            <td th:text="${house.buildingNumber}">${house.buildingNumber}</td>
+                            <td th:text="${house.customerId}">${house.customerId}</td>
+                            <td th:text="${house.houseType}">${house.houseType}</td>
+                            <td th:text="${house.price}">${house.price}</td>
+                            <td th:text="${house.address}">${house.address}</td>
+                            <td><span th:if="${house.state}==false">待租</span></td>
+                            <td><span th:if="${house.state}==true">使用中</span></td>
+                            <td th:text="${house.introduce}">此处省略xxx字</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr/>
+                    <div class="row clearfix">
+                        <div class="col-md-3 col-sm-3 col-xs-3">
+                            共<label id="total_count" style="color:#080808" ></label>条记录,当前<label id="current_page" style="color:#080808"></label>页。
+                        </div>
+                        <div class="col-md-9 col-sm-9 col-xs-9" align="right">
+                            <ul id="page" style="margin: 0 0">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Main Page -->
+
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<!-- Vendor JS-->
+<script th:src="@{/vendor/js/jquery.min.js}"></script>
+<script th:src="@{/vendor/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/vendor/js/jquery-migrate-1.2.1.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap-paginator.min.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/skycons/js/skycons.js}"></script>
+
+<!-- Theme JS -->
+<script th:src="@{/js/jquery.mmenu.min.js}"></script>
+<script th:src="@{/js/core.min.js}"></script>
+
+<script th:src="@{/js/pages/index.js}"></script>
+<script th:src="@{/js/pages/add_index.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function(){
+        $("#total_count").html([[${datas.totalElements}]]);
+        $("#current_page").html(Number([[${datas.number}]]) + Number(1) +"/" + [[${datas.totalPages}]]);
+        $("#a_clear").click(function () {
+            $('#stu_name').val("");
+        });
+    });
+
+    function community_change(value) {
+        $.ajax({
+            url: [[@{/api/house/building}]],
+        type:'post',
+            data:{'community': value},
+        dataType: 'JSON',
+            success:function(data){
+            var option = "<option value=''>请选择</option>";
+            $.each(data, function(id, text){
+                option += "<option value='" + text + "'>" + text + "</option>";
+            });
+            $("#building").html(option);
+        }
+    });
+    };
+    $('#page').bootstrapPaginator({
+        currentPage: [[${datas.number}]] + 1,//当前的请求页面。
+        totalPages: [[${datas.totalPages}]],//一共多少页。
+        size: "normal",//页眉的大小。
+        bootstrapMajorVersion: 3,//bootstrap的版本要求。
+        alignment: "right",
+        numberOfPages: [[${datas.size}]],//一页列出多少数据。
+        itemTexts: function (type, page, current) {//如下的代码是将页眉显示的中文显示我们自定义的中文。
+            switch (type) {
+                case "first":
+                    return "首页";
+                case "prev":
+                    return "上一页";
+                case "next":
+                    return "下一页";
+                case "last":
+                    return "末页";
+                case "page":
+                    return page;
+            }
+        },
+        onPageClicked: function (event, originalEvent, type, page) {
+            load_data(page-1);
+        }
+    });
+    function load_data(page) {
+        $.ajax({
+            url: [[@{/api/house/search/}]] + page,
+            type:'post',
+            data: JSON.stringify({"community": $("#community").val(), "buildingNumber": $("#building").val(), "houseType": $("#type").val(), "houseNumber": $("#house_number").val(),"state": $("#state").val()}),
+            contentType: "application/json; charset=utf-8",
+            dataType: 'JSON',
+            success:function(data){
+            $("#total_count").html(data.totalElements);
+            $("#current_page").html(Number(data.number) + Number(1) +"/" + data.totalPages);
+            if(data.totalPages!=0){
+                $('#page').bootstrapPaginator({
+                    currentPage: Number(data.number) + Number(1),//当前的请求页面。
+                    bootstrapMajorVersion: 3,//bootstrap的版本要求。
+                    totalPages: data.totalPages//一共多少页。
+                });
+            }
+            var tbody = "";
+            $.each(data.content, function(id, house){
+                tbody += "<tr><td>" + house.community + "</td>" +
+                    "<td>" + house.buildingNumber + "</td>" +
+                    "<td>" + house.customerId + "</td>" +
+                    "<td>" + house.houseType+ "</td>" +
+                    "<td>" + house.price + "</td>" +
+                    "<td>" + house.address + "</td>";
+                var state = house.state;
+                if(house.state){
+                    tbody += "<td>" + "待租" + "</td>";
+                }else {
+                    tbody += "<td>" + "租用中" + "</td>";
+                }
+                if(house.introduce != null){
+                    tbody += "<td>" + house.introduce + "</td></tr>";
+                }else{
+                    tbody += "<td>" + "此处省略xxx字" + "</td></tr>";
+                }
+            });
+            if(tbody.length==0){
+                tbody = "<div class=\"alert alert-danger\">暂无数据，请修改查询条件。</div>";
+            }
+            $("#my_tbody").html(tbody);
+        }
+    });
+    };
+    /*]]>*/
+</script>
+</body>
+</html>

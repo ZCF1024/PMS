@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+    <sidebar>
+        <div class="sidebar">
+            <div class="sidebar-collapse">
+                <!-- Sidebar Header Logo-->
+                <div class="sidebar-header">
+                    <img th:src="@{/images/logo/logo.png}" alt="" />
+                </div>
+                <!-- Sidebar Menu-->
+                <div class="sidebar-menu">
+                    <nav id="menu" class="nav-main" role="navigation">
+                        <ul class="nav nav-sidebar">
+                            <div class="text-center">
+                                <div class="flag">
+                                    <img th:src="@{/images/logo/house.png}" class="img-flags" alt="" />
+                                </div>
+                            </div>
+                            <li class="active nav-parent">
+                                <a>
+                                    <i class="fa fa-database" aria-hidden="true"></i><span>基础数据</span>
+                                </a>
+                                <ul class="nav nav-children">
+                                    <!-- <i class="fa fa-anchor aria-hidden="true"></i> -->
+                                    <li><a href="#"><span class="text myoperat"> 租房管理</span></a></li>
+                                    <li><a  th:href="@{/view/house/house}"><span class="text myoperat"> 房源管理</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-copy" aria-hidden="true"></i><span>信息备份</span>
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li><a href="#"><span class="text myoperat"> 房源导出</span></a></li>
+                                    <li><a href="#"><span class="text myoperat"> 租户导出</span></a></li>
+                                    <li><a href="#"><span class="text myoperat"> 房源导入</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i><span>签约入住</span>
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li><a href="#"><span class="text myoperat"> 通知书审核</span></a></li>
+                                    <li><a href="#"><span class="text myoperat"> 合同管理</span></a></li>
+                                    <li><a href="#"><span class="text myoperat"> 合同续订</span></a></li>
+                                    <li><a href="#"><span class="text myoperat"> 合同查询</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-money" aria-hidden="true"></i><span>公租收费</span>
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li><a href="#"><span class="text myoperat"> 日常合同扣租</span></a></li>
+                                    <li><a href="#"><span class="text myoperat"> 日常合同续费</span></a></li>
+                                    <li><a href="#"><span class="text myoperat"> 维修费用审核</span></a></li>
+                                    <li><a href="#"><span class="text myoperat"> 租金费用调整</span></a></li>
+                                    <li><a href="#"><span class="text myoperat"> 水电费用缴纳</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-table" aria-hidden="true"></i><span>日常业务</span>
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li><a href="#"><span class="text myoperat"> 房屋资产盘查</span></a></li>
+                                    <li><a href="#"><span class="text myoperat"> 园区企业盘查</span></a></li>
+                                    <li><a href="#"><span class="text myoperat"> 园区企业查询</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-power-off" aria-hidden="true"></i><span>解约退租</span>
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li><a href="#"><span class="text myoperat"> 退租申请</span></a></li>
+                                    <li><a href="#"><span class="text myoperat"> 物业结算</span></a></li>
+                                    <li><a href="#"><span class="text myoperat"> 合同解约</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-cogs" aria-hidden="true"></i><span>系统参数</span>
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li><a href="#"><span class="text myoperat"> 出租方设置</span></a></li>
+                                    <li><a href="#"><span class="text myoperat"> 租金评定设置</span></a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-font" aria-hidden="true"></i><span>Typography</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- End Sidebar Menu-->
+            </div>
+            <!-- Sidebar Footer-->
+            <div class="sidebar-footer">
+                <ul class="sidebar-terms bk-margin-top-10">
+                    <li><a href="#">Help</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div>
+            <!-- End Sidebar Footer-->
+        </div>
+    </sidebar>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>物业管理系统</title>
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/vendor/skycons/css/skycons.css}" rel="stylesheet" />
+    <link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
+    <link th:href="@{/vendor/css/pace.preloader.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+
+    <link th:href="@{/css/jquery.mmenu.css}" rel="stylesheet" />
+
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <link th:href="@{/css/add_style.css}" rel="stylesheet" />
+</head>
+<body>
+
+<!-- Header-->
+<div th:replace="menu/header::header"></div>
+
+<!-- Start: Content -->
+<div class="container-fluid content">
+    <div class="row">
+        <!-- Sidebar -->
+        <div th:replace="menu/sidebar::sidebar"></div>
+
+        <!-- Main Page -->
+        <div class="main ">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="pull-left">
+                    <ol  id="headPath" class="breadcrumb visible-sm visible-md visible-lg">
+                        <li><a href="index.html"><i class="icon fa fa-home"></i>主页</a></li>
+                        <li class="active"><i class="fa fa-database"></i>基础数据</li>
+                        <li class="active"><i class="fa fa-anchor"></i>租房管理</li>
+                    </ol>
+                </div>
+                <div class="pull-right">
+                    <h2 id="rightContent">租房管理</h2>
+                </div>
+            </div>
+            <!-- End Page Header -->
+            <div class="center-block panel panel-info " style="min-height:520px;width:100%">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        房屋信息图表
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row clearfix">
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <span>小区</span>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <span class="myState" style="background-color: lightgreen">租用中</span>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <span class="myState" style="background-color: #3b5998">待租用</span>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <span class="myState" style="background-color: #953b39">在建</span>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <span class="myState" style="background-color: #a47e3c">欠费</span>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <span class="myState" style="background-color: #b1dd94">其他</span>
+                        </div>
+                    </div><br/>
+
+                    <div class="row clearfix">
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">房号</span>
+                                <input id="house_number" class="form-control" type="text" />
+                                <a id="a_clear" class="glyphicon glyphicon-remove btn form-control-feedback" style="pointer-events: auto"></a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">状态</span>
+                                <select id="state" name="state" class="form-control">
+                                    <option value="false" selected="selected">待租</option>
+                                    <option value="true">已被租</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="input-group">
+                                <button type="button" class="btn btn-primary" onclick="load_data(0)">查询</button>
+                            </div>
+                        </div>
+                    </div><hr/>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>小区</th>
+                            <th>坐落</th>
+                            <th>租户</th>
+                            <th>户型</th>
+                            <th>价位</th>
+                            <th>地址</th>
+                            <th>状态</th>
+                            <th>简介</th>
+                        </tr>
+                        </thead>
+                        <tbody id="my_tbody">
+                        <tr th:each="house : ${datas}">
+                            <td th:text="${house.community}">${house.community}</td>
+                            <td th:text="${house.buildingNumber}">${house.buildingNumber}</td>
+                            <td th:text="${house.customerId}">${house.customerId}</td>
+                            <td th:text="${house.houseType}">${house.houseType}</td>
+                            <td th:text="${house.price}">${house.price}</td>
+                            <td th:text="${house.address}">${house.address}</td>
+                            <td><span th:if="${house.state}==false">待租</span></td>
+                            <td><span th:if="${house.state}==true">使用中</span></td>
+                            <td th:text="${house.introduce}">${house.introduce}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr/>
+                    <div class="row clearfix">
+                        <div class="col-md-3 col-sm-3 col-xs-3">
+                            共<label id="total_count" style="color:#080808" ></label>条记录,当前<label id="current_page" style="color:#080808"></label>页。
+                        </div>
+                        <div class="col-md-9 col-sm-9 col-xs-9" align="right">
+                            <ul id="page" style="margin: 0 0">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Main Page -->
+
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<!-- Vendor JS-->
+<script th:src="@{/vendor/js/jquery.min.js}"></script>
+<script th:src="@{/vendor/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/vendor/js/jquery-migrate-1.2.1.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/vendor/skycons/js/skycons.js}"></script>
+
+<!-- Theme JS -->
+<script th:src="@{/js/jquery.mmenu.min.js}"></script>
+<script th:src="@{/js/core.min.js}"></script>
+
+<script th:src="@{/js/pages/index.js}"></script>
+<script th:src="@{/js/pages/add_index.js}"></script>
+</body>
+</html>
