@@ -9,9 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
-    <link th:href="@{/vendor/skycons/css/skycons.css}" rel="stylesheet" />
     <link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
-    <link th:href="@{/vendor/css/pace.preloader.css}" rel="stylesheet" />
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
@@ -54,17 +52,11 @@
                         <div class="top-nav">
                             <h3 class="cate">楼盘</h3>
                         </div>
-                        <li class="active" id="sidwbar-community">
-                            <a href="#" style="background-color: #ECEDF0; color: rgba(0,0, 0,0.7);">
-                                <span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span> xxx小区
+                        <li class="active sidwbar-community" th:each="community : ${communities}">
+                            <a href="#" class="mymenu-community">
+                                <span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span>
+                                <p th:text="${community}"></p>
                             </a>
-                            <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                                <li><a href="#">xxx小区1号楼</a></li>
-                                <li><a href="#">xxx小区2号楼</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span>xxx小区</a>
                             <ul class="nav-pills nav-stacked" style="list-style-type:none;">
                                 <li><a href="#">xxx小区1号楼</a></li>
                                 <li><a href="#">xxx小区2号楼</a></li>
@@ -225,42 +217,55 @@
 
 <div class="clearfix"></div>
 
-<!-- Vendor JS-->
-<script th:src="@{/vendor/js/jquery.min.js}"></script>
-<script th:src="@{/vendor/js/jquery-2.1.1.min.js}"></script>
-<script th:src="@{/vendor/js/jquery-migrate-1.2.1.min.js}"></script>
+<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
 <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/vendor/skycons/js/skycons.js}"></script>
 
-<!-- Theme JS -->
 <script th:src="@{/js/jquery.mmenu.min.js}"></script>
 <script th:src="@{/js/core.min.js}"></script>
 
 <script th:src="@{/js/pages/index.js}"></script>
-<script th:src="@{/js/pages/add_index.js}"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
     $(document).ready(function(){
-        $("#total_count").html([[${datas.totalElements}]]);
-        $("#current_page").html(Number([[${datas.number}]]) + Number(1) +"/" + [[${datas.totalPages}]]);
-        $("#a_clear").click(function () {
-            $('#stu_name').val("");
-        });
+        initMenu();
     });
 
-    function community_change(value) {
+    function initMenu() {
+        $('#mymenu ul').hide();
+        $('#mymenu ul').children('.current').parent().show();
+        // $('#mymenu ul:first').show();
+        $('#mymenu li a').click(function() {
+
+                var checkElement = $(this).next();
+
+                if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+                    checkElement.slideUp('normal');
+                    return false;
+                }
+                if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+                    $('#mymenu ul:visible').slideUp('normal');
+                    get_building(this);
+                    checkElement.slideDown('normal');
+                    return false;
+                }
+        });
+    }
+
+    function get_building(element) {
+        var value = $(element).children("p").html();
         $.ajax({
             url: [[@{/api/house/building}]],
-        type:'post',
+            type:'post',
             data:{'community': value},
-        dataType: 'JSON',
+            dataType: 'JSON',
             success:function(data){
-            var option = "<option value=''>请选择</option>";
-            $.each(data, function(id, text){
-                option += "<option value='" + text + "'>" + text + "</option>";
-            });
-            $("#building").html(option);
-        }
+                var building = "<ul class=\"nav-pills nav-stacked\" style=\"list-style-type:none;\">";
+                $.each(data, function(id, number){
+                    building += "<li><a href=\"#\">" + value + number + "号楼</a></li>";
+                });
+                building += "</ul>";
+                $(element).next().replaceWith(building);
+            }
     });
     };
     /*]]>*/

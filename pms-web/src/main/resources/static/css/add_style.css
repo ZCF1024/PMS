@@ -15,6 +15,17 @@
     font-size: 16px;
     padding: 5px 8px 3px 8px;
 }
+
+#mymenu{
+    margin-top: 0px;
+    height: 100%;
+}
+
+.mymenu-community {
+    background-color: rgba(172,222,246, 0.4);
+    color: rgba(0,0, 0,0.7);
+}
+
 .myHouse{
     margin-left: 0px;
 }
@@ -22,7 +33,7 @@ h3.cate {
     color: #fff;
     font-size: 1.7em;
     padding: 0.6em;
-    background: #A8A8A8;
+    background: #ACDEF6;
     margin: 0;
 }
 .nav-pills>li>a {
@@ -46,25 +57,29 @@ h3.cate {
     height: 85%;
     margin-left: 0px;
     overflow-y: auto;
+    overflow-x: auto;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    border: #A8A8A8 solid 2px;
+    border-bottom: none;
+    background-color: rgba(172,222,246, 0.4);
 }
 /* Sidebar Styles */
 
 .sidebar-nav {
     position: absolute;
     top: 0;
-    width: 160px;
+    width: 180px;
     padding: 0;
     list-style: none;
     margin-top: 2px;
 }
 
 .sidebar-nav li {
-    text-indent: 15px;
-    line-height: 40px;
+    text-indent: 0px;
+    line-height: 32px;
 }
 
 .sidebar-nav li a {
@@ -80,13 +95,8 @@ h3.cate {
     background: #bce8f1;
 }
 
-#mymenu{
-    margin-top: 0px;
-    height: 100%;
-    border: #A8A8A8 solid 2px;
-}
-
 .sidebar-nav li a:active,
+
 .sidebar-nav li a:focus {
     text-decoration: none;
 }
@@ -104,12 +114,12 @@ h3.cate {
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 160px;
+        padding-left: 180px;
     }
     #sidebar-wrapper {
-        width: 160px;
+        width: 180px;
     }
     #sidebar-wrapper:hover {
-        width: 160px;
+        width: 180px;
     }
 }

@@ -50,7 +50,6 @@ public class HouseViewController {
     public ModelAndView choose(House house, ModelAndView modelAndView){
         house.setState(false);
         modelAndView.addObject("communities", this.houseManager.getCommunities());
-        modelAndView.addObject("datas", this.houseManager.findAll(0, pageSize, house));
         modelAndView.setViewName("choose_house");
         return  modelAndView;
     }
