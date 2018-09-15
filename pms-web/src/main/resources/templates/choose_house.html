@@ -48,99 +48,178 @@
                 </div>
             </div>
             <!-- End Page Header -->
-            <div class="center-block panel panel-info " style="min-height:520px;width:100%">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        房屋信息图表
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row clearfix">
-                        <div class="col-md-4 col-sm-4 col-xs-4">
-                            <span>小区</span>
+            <div id="wrapper">
+                <div id="sidebar-wrapper">
+                    <ul class="sidebar-nav nav-pills nav-stacked" id="mymenu">
+                        <div class="top-nav">
+                            <h3 class="cate">楼盘</h3>
                         </div>
-                        <div class="col-md-1 col-sm-1 col-xs-1">
-                            <span class="myState" style="background-color: lightgreen">租用中</span>
-                        </div>
-                        <div class="col-md-1 col-sm-1 col-xs-1">
-                            <span class="myState" style="background-color: #3b5998">待租用</span>
-                        </div>
-                        <div class="col-md-1 col-sm-1 col-xs-1">
-                            <span class="myState" style="background-color: #953b39">在建</span>
-                        </div>
-                        <div class="col-md-1 col-sm-1 col-xs-1">
-                            <span class="myState" style="background-color: #a47e3c">欠费</span>
-                        </div>
-                        <div class="col-md-1 col-sm-1 col-xs-1">
-                            <span class="myState" style="background-color: #b1dd94">其他</span>
-                        </div>
-                    </div><br/>
-
-                    <div class="row clearfix">
-                        <div class="col-md-4 col-sm-4 col-xs-4">
-                            <div class="input-group">
-                                <span class="input-group-addon">房号</span>
-                                <input id="house_number" class="form-control" type="text" />
-                                <a id="a_clear" class="glyphicon glyphicon-remove btn form-control-feedback" style="pointer-events: auto"></a>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-4">
-                            <div class="input-group">
-                                <span class="input-group-addon">状态</span>
-                                <select id="state" name="state" class="form-control">
-                                    <option value="false" selected="selected">待租</option>
-                                    <option value="true">已被租</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-4">
-                            <div class="input-group">
-                                <button type="button" class="btn btn-primary" onclick="load_data(0)">查询</button>
-                            </div>
-                        </div>
-                    </div><hr/>
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>小区</th>
-                            <th>坐落</th>
-                            <th>租户</th>
-                            <th>户型</th>
-                            <th>价位</th>
-                            <th>地址</th>
-                            <th>状态</th>
-                            <th>简介</th>
-                        </tr>
-                        </thead>
-                        <tbody id="my_tbody">
-                        <tr th:each="house : ${datas}">
-                            <td th:text="${house.community}">${house.community}</td>
-                            <td th:text="${house.buildingNumber}">${house.buildingNumber}</td>
-                            <td th:text="${house.customerId}">${house.customerId}</td>
-                            <td th:text="${house.houseType}">${house.houseType}</td>
-                            <td th:text="${house.price}">${house.price}</td>
-                            <td th:text="${house.address}">${house.address}</td>
-                            <td><span th:if="${house.state}==false">待租</span></td>
-                            <td><span th:if="${house.state}==true">使用中</span></td>
-                            <td th:text="${house.introduce}">${house.introduce}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <hr/>
-                    <div class="row clearfix">
-                        <div class="col-md-3 col-sm-3 col-xs-3">
-                            共<label id="total_count" style="color:#080808" ></label>条记录,当前<label id="current_page" style="color:#080808"></label>页。
-                        </div>
-                        <div class="col-md-9 col-sm-9 col-xs-9" align="right">
-                            <ul id="page" style="margin: 0 0">
+                        <li class="active" id="sidwbar-community">
+                            <a href="#" style="background-color: #ECEDF0; color: rgba(0,0, 0,0.7);">
+                                <span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span> xxx小区
+                            </a>
+                            <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                                <li><a href="#">xxx小区1号楼</a></li>
+                                <li><a href="#">xxx小区2号楼</a></li>
                             </ul>
+                        </li>
+                        <li>
+                            <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span>xxx小区</a>
+                            <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                                <li><a href="#">xxx小区1号楼</a></li>
+                                <li><a href="#">xxx小区2号楼</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="panel panel-default bk-bg-white">
+                            <div class="panel-heading bk-bg-white">
+                                <h6 style="font-size: 18px">
+                                    <i class="fa fa-table red"></i>
+                                    <span class="break"></span>房屋信息图表
+                                </h6>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-condensed table-hover" id="house-state-table">
+                                        <div class="row clearfix">
+                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                <i class="fa fa-location-arrow"></i>
+                                                <span class="myState" style="color: #000000">xxx小区x号楼</span>
+                                            </div>
+                                            <div class="col-md-1 col-sm-1 col-xs-1">
+                                                <span class="myState" style="background-color: lightgreen">租用中</span>
+                                            </div>
+                                            <div class="col-md-1 col-sm-1 col-xs-1">
+                                                <span class="myState" style="background-color: #3b5998">待租用</span>
+                                            </div>
+                                            <div class="col-md-1 col-sm-1 col-xs-1">
+                                                <span class="myState" style="background-color: #953b39">在建</span>
+                                            </div>
+                                            <div class="col-md-1 col-sm-1 col-xs-1">
+                                                <span class="myState" style="background-color: #a47e3c">欠费</span>
+                                            </div>
+                                            <div class="col-md-1 col-sm-1 col-xs-1">
+                                                <span class="myState" style="background-color: #b1dd94">其他</span>
+                                            </div>
+                                        </div><br/>
+                                        <thead>
+                                        <tr class="house-state-head">
+                                            <th>单元</th>
+                                            <th colspan="3">一单元</th>
+                                            <th colspan="3">二单元</th>
+                                            <th colspan="3">三单元</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="house-data-table-body">
+                                        <tr class="house-state-data">
+                                            <td>1层</td>
+                                            <td><a href="#">1-1</a></td>
+                                            <td><a href="#">1-2</a></td>
+                                            <td><a href="#">1-3</a></td>
+                                            <td><a href="#">2-1</a></td>
+                                            <td><a href="#">2-2</a></td>
+                                            <td><a href="#">2-3</a></td>
+                                            <td><a href="#">3-1</a></td>
+                                            <td><a href="#">3-2</a></td>
+                                            <td><a href="#">3-3</a></td>
+                                        </tr>
+                                        <tr class="house-state-data">
+                                            <td class="house-floor">2层</td>
+                                            <td><a href="#">1-1</a></td>
+                                            <td><a href="#">1-2</a></td>
+                                            <td><a href="#">1-3</a></td>
+                                            <td><a href="#">2-1</a></td>
+                                            <td><a href="#">2-2</a></td>
+                                            <td><a href="#">2-3</a></td>
+                                            <td><a href="#">3-1</a></td>
+                                            <td><a href="#">3-2</a></td>
+                                            <td><a href="#">3-3</a></td>
+                                        </tr>
+                                        <tr class="house-state-data">
+                                            <td class="house-floor">3层</td>
+                                            <td><a href="#">1-1</a></td>
+                                            <td><a href="#">1-2</a></td>
+                                            <td><a href="#">1-3</a></td>
+                                            <td><a href="#">2-1</a></td>
+                                            <td><a href="#">2-2</a></td>
+                                            <td><a href="#">2-3</a></td>
+                                            <td><a href="#">3-1</a></td>
+                                            <td><a href="#">3-2</a></td>
+                                            <td><a href="#">3-3</a></td>
+                                        </tr>
+                                        <tr class="house-state-data">
+                                            <td class="house-floor">4层</td>
+                                            <td><a href="#">1-1</a></td>
+                                            <td><a href="#">1-2</a></td>
+                                            <td><a href="#">1-3</a></td>
+                                            <td><a href="#">2-1</a></td>
+                                            <td><a href="#">2-2</a></td>
+                                            <td><a href="#">2-3</a></td>
+                                            <td><a href="#">3-1</a></td>
+                                            <td><a href="#">3-2</a></td>
+                                            <td><a href="#">3-3</a></td>
+                                        </tr>
+                                        <tr class="house-state-data">
+                                            <td class="house-floor">5层</td>
+                                            <td><a href="#">1-1</a></td>
+                                            <td><a href="#">1-2</a></td>
+                                            <td><a href="#">1-3</a></td>
+                                            <td><a href="#">2-1</a></td>
+                                            <td><a href="#">2-2</a></td>
+                                            <td><a href="#">2-3</a></td>
+                                            <td><a href="#">3-1</a></td>
+                                            <td><a href="#">3-2</a></td>
+                                            <td><a href="#">3-3</a></td>
+                                        </tr>
+                                        <tr class="house-state-data">
+                                            <td class="house-floor">6层</td>
+                                            <td><a href="#">1-1</a></td>
+                                            <td><a href="#">1-2</a></td>
+                                            <td><a href="#">1-3</a></td>
+                                            <td><a href="#">2-1</a></td>
+                                            <td><a href="#">2-2</a></td>
+                                            <td><a href="#">2-3</a></td>
+                                            <td><a href="#">3-1</a></td>
+                                            <td><a href="#">3-2</a></td>
+                                            <td><a href="#">3-3</a></td>
+                                        </tr>
+                                        <tr class="house-state-data">
+                                            <td class="house-floor">7层</td>
+                                            <td><a href="#">1-1</a></td>
+                                            <td><a href="#">1-2</a></td>
+                                            <td><a href="#">1-3</a></td>
+                                            <td><a href="#">2-1</a></td>
+                                            <td><a href="#">2-2</a></td>
+                                            <td><a href="#">2-3</a></td>
+                                            <td><a href="#">3-1</a></td>
+                                            <td><a href="#">3-2</a></td>
+                                            <td><a href="#">3-3</a></td>
+                                        </tr>
+                                        <tr class="house-state-data">
+                                            <td class="house-floor">8层</td>
+                                            <td><a href="#">1-1</a></td>
+                                            <td><a href="#">1-2</a></td>
+                                            <td><a href="#">1-3</a></td>
+                                            <td><a href="#">2-1</a></td>
+                                            <td><a href="#">2-2</a></td>
+                                            <td><a href="#">2-3</a></td>
+                                            <td><a href="#">3-1</a></td>
+                                            <td><a href="#">3-2</a></td>
+                                            <td><a href="#">3-3</a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- End Main Page -->
-
     </div>
 </div>
 
@@ -159,5 +238,32 @@
 
 <script th:src="@{/js/pages/index.js}"></script>
 <script th:src="@{/js/pages/add_index.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function(){
+        $("#total_count").html([[${datas.totalElements}]]);
+        $("#current_page").html(Number([[${datas.number}]]) + Number(1) +"/" + [[${datas.totalPages}]]);
+        $("#a_clear").click(function () {
+            $('#stu_name').val("");
+        });
+    });
+
+    function community_change(value) {
+        $.ajax({
+            url: [[@{/api/house/building}]],
+        type:'post',
+            data:{'community': value},
+        dataType: 'JSON',
+            success:function(data){
+            var option = "<option value=''>请选择</option>";
+            $.each(data, function(id, text){
+                option += "<option value='" + text + "'>" + text + "</option>";
+            });
+            $("#building").html(option);
+        }
+    });
+    };
+    /*]]>*/
+</script>
 </body>
 </html>

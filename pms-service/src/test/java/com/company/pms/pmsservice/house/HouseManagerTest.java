@@ -25,19 +25,39 @@ public class HouseManagerTest {
     @Test
     public void generator() {
         List<House> list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            House house = new House();
-            house.setPrice(i * 100.5);
-            house.setAddress("address_" + i);
-            house.setArea(i * 4.5);
-            house.setState(i % 2 == 0 ? false : true);
-            house.setCustomerId((long) i);
-            house.setCommunity("瑞景河畔小区");
-            house.setBuildingNumber(i);
-            house.setFloorNumber(i);
-            house.setHouseNumber(i);
-            house.setHouseType("两室一厅一卫");
-            list.add(house);
+        for(int j = 0; j < 5; j++){
+            for(int k = 0; k < 20; k++){
+                for (int i = 0; i < 30; i++) {
+                    House house = new House();
+                    house.setPrice(i * 100.5);
+                    house.setAddress("address_" + i);
+                    house.setArea(i * 4.5);
+                    house.setState(false);
+                    if(i % 2 == 1){
+                        house.setState(true);
+                        house.setCustomerId((long) i);
+                    }
+                    switch (j){
+                        case 0: house.setCommunity("瑞景河畔小区"); break;
+                        case 1: house.setCommunity("碧桂园小区"); break;
+                        case 2: house.setCommunity("景秀园小区"); break;
+                        case 3: house.setCommunity("蔚蓝小区"); break;
+                        case 4:house.setCommunity("合胜园小区"); break;
+                    }
+                    house.setBuildingNumber(k);
+                    house.setFloorNumber(i);
+                    house.setHouseNumber(100 + i);
+                    int type = i % 4;
+                    switch (type){
+                        case 0: house.setHouseType("两室一厅一卫"); break;
+                        case 1: house.setHouseType("三室一厅二卫"); break;
+                        case 2: house.setHouseType("一室一厅一卫"); break;
+                        case 3: house.setHouseType("两室一厅二卫"); break;
+                        case 4:house.setHouseType("三室一厅三卫"); break;
+                    }
+                    list.add(house);
+                }
+            }
         }
         this.houseManager.save(list);
     }

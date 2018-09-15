@@ -9,4 +9,25 @@ $(document).ready(function(){
         $("#rightContent").text(this.innerText);
     });
     $('#myCarousel').carousel({interval:4000});
+    initMenu();
 });
+function initMenu() {
+    $('#mymenu ul').hide();
+    $('#mymenu ul').children('.current').parent().show();
+    // $('#mymenu ul:first').show();
+    $('#mymenu li a').click(
+        function() {
+            var checkElement = $(this).next();
+
+            if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+                checkElement.slideUp('normal');
+                return false;
+            }
+            if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+                $('#mymenu ul:visible').slideUp('normal');
+                checkElement.slideDown('normal');
+                return false;
+            }
+        }
+    );
+}

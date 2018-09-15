@@ -94,7 +94,7 @@
                         <div class="col-md-4 col-sm-4 col-xs-4">
                             <div class="input-group">
                                 <span class="input-group-addon">房号</span>
-                                <input id="house_number" class="form-control" type="text" />
+                                <input id="house_number" class="form-control" type="number" />
                                 <a id="a_clear" class="glyphicon glyphicon-remove btn form-control-feedback" style="pointer-events: auto"></a>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                         <tbody id="my_tbody">
                         <tr th:each="house : ${datas}">
                             <td th:text="${house.community}">${house.community}</td>
-                            <td th:text="${house.buildingNumber}">${house.buildingNumber}</td>
+                            <td th:text="'#'+${house.buildingNumber}+'-'+${house.floorNumber}">${house.buildingNumber}</td>
                             <td th:text="${house.customerId}">${house.customerId}</td>
                             <td th:text="${house.houseType}">${house.houseType}</td>
                             <td th:text="${house.price}">${house.price}</td>
@@ -244,7 +244,7 @@
             var tbody = "";
             $.each(data.content, function(id, house){
                 tbody += "<tr><td>" + house.community + "</td>" +
-                    "<td>" + house.buildingNumber + "</td>" +
+                    "<td>#" + house.buildingNumber + "-" + house.floorNumber + "</td>" +
                     "<td>" + house.customerId + "</td>" +
                     "<td>" + house.houseType+ "</td>" +
                     "<td>" + house.price + "</td>" +
