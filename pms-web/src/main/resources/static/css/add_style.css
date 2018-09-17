@@ -1,15 +1,89 @@
-﻿.house-state-head>th {
+﻿.modal-header{
+    background-color: #ACDEF6;
+    color: white;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+
+.form-group>label{
+    width: 12%;
+    float: left;
+    color: #000;
+    font-size: 14px;
+    font-weight: bolder;
+    margin-top: 5px;
+}
+
+.form-group>input{
+    width: 80%;
+}
+
+.building {
+    float: left;
+}
+
+.building label{
+    margin: 5px 5px 0px -15px;
+    width: 40%;
+    float: left;
+    color: #000;
+    font-size: 14px;
+    font-weight: bolder;
+}
+
+.building input {
+    width: 60%;
+}
+
+input:focus {
+    border: 3px solid rgba(0,123,255, 0.2) !important;
+}
+
+input:checked {
+    /* 不起作用 */
+    height: 50px;
+    width: 50px;
+}
+
+.modal-body {
+    margin-left: 60px;
+    margin-bottom: 0px;
+    height: 400px;
+}
+
+#modal-state label {
+    padding-left: 35px;
+}
+
+#modal-introduce {
+    margin: 5px 0px 0px 0px;
+    width: 80%;
+    height: 100px;
+}
+
+input[type="radio"] {
+    border-radius: 3px;
+    margin-left: -30px;
+    height: 20px;
+    width: 20px;
+}
+
+.house-state-head>th {
     text-align: center;
 }
+
 .house-state-data>td {
     text-align: center;
 }
+
 .img-flags {
 	height: 85px;
 }
+
 .img-logo{
 	height: 40px;
 }
+
 .myState{
     color: white;
     font-size: 16px;
@@ -29,6 +103,7 @@
 .myHouse{
     margin-left: 0px;
 }
+
 h3.cate {
     color: #fff;
     font-size: 1.7em;
@@ -36,6 +111,7 @@ h3.cate {
     background: #ACDEF6;
     margin: 0;
 }
+
 .nav-pills>li>a {
     border-radius: 0;
 }

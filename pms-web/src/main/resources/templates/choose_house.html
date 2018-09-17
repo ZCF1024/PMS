@@ -255,13 +255,16 @@
             success:function(data){
                 var building = "<ul class=\"nav-pills nav-stacked\" style=\"list-style-type:none;\">";
                 $.each(data, function(id, number){
-                    building += "<li><a href=\"#\">" + value + number + "号楼</a></li>";
+                    building += "<li><a onclick=\"get_house('" + value + "', " + number +")\">" + value + number + "号楼</a></li>";
                 });
                 building += "</ul>";
                 $(element).next().replaceWith(building);
             }
-    });
+        });
     };
+    function get_house(community, number) {
+        console.log("小区： *"+ community + "*  楼号：*" + number + "*");
+    }
     /*]]>*/
 </script>
 </body>

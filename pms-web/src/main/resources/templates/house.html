@@ -106,7 +106,7 @@
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-4">
                             <div class="input-group">
-                                <button type="button" class="btn btn-primary" onclick="load_data(0)">查询</button>
+                                <button type="button" class="btn btn-primary" onclick="load_data(0)"><i class="fa fa-search"></i>查询</button>
                             </div>
                         </div>
                     </div><hr/>
@@ -118,23 +118,34 @@
                             <th>租户</th>
                             <th>户型</th>
                             <th>价位</th>
-                            <th>地址</th>
+                            <th>楼层</th>
+                            <th>房号</th>
                             <th>状态</th>
                             <th>简介</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody id="my_tbody">
-                        <tr th:each="house : ${datas}">
-                            <td th:text="${house.community}">${house.community}</td>
-                            <td th:text="'#'+${house.buildingNumber}+'-'+${house.floorNumber}">${house.buildingNumber}</td>
-                            <td th:text="${house.customerId}">${house.customerId}</td>
-                            <td th:text="${house.houseType}">${house.houseType}</td>
-                            <td th:text="${house.price}">${house.price}</td>
-                            <td th:text="${house.address}">${house.address}</td>
-                            <td><span th:if="${house.state}==false">待租</span></td>
-                            <td><span th:if="${house.state}==true">使用中</span></td>
-                            <td th:text="${house.introduce}">此处省略xxx字</td>
-                        </tr>
+                            <tr th:each="house : ${datas}">
+                                <td class="table-community" th:text="${house.community}">${house.community}</td>
+                                <td class="table-buildingNumber" th:text="${house.buildingNumber}">${house.buildingNumber}</td>
+                                <td class="table-customerId" th:text="${house.customerId == null} ? '待租' : ${house.introduce}"></td>
+                                <td class="table-houseType" th:text="${house.houseType}">${house.houseType}</td>
+                                <td class="table-price" th:text="${house.price}">${house.price}</td>
+                                <td class="table-floorNumber" th:text="${house.floorNumber}">${house.floorNumber}</td>
+                                <td class="table-houseNumber" th:text="${house.houseNumber}">${house.houseNumber}</td>
+                                <td class="table-state" value="1" th:if="${house.state}==false">待租</td>
+                                <td class="table-state" th:value="2" th:if="${house.state}==true">使用中</td>
+                                <td class="table-introduce" th:text="${house.introduce == null} ? '此处省略xxx字' : ${house.introduce}">${house.introduce}</td>
+                                <td th:id="${house.id}">
+                                    <button data-toggle="modal" data-target="#editModal" class="btn btn-primary btn-xs" type="button">
+                                        <i class="fa fa-edit"></i> 修改
+                                    </button>
+                                    <button th:onclick="|delete_house('${house.id}')|" class="btn btn-danger btn-xs" type="button">
+                                        <i class="fa fa-trash-o fa-lg"></i> 删除
+                                    </button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <hr/>
@@ -152,6 +163,87 @@
         </div>
         <!-- End Main Page -->
 
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                </button>
+                <h4 class="modal-title" id="editModalLabel">修改房屋信息</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="modal-community" class="control-label">小区:</label>
+                        <input type="text" class="form-control" id="modal-community" name="community" />
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-houseType" class="control-label">户型:</label>
+                        <input type="text" class="form-control" id="modal-houseType" name="houseType" />
+                    </div>
+                    <div class="form-group building">
+                        <div class="col-lg-4">
+                            <label for="modal-buildingNumber" class="control-label">楼号:</label>
+                            <input type="number" class="form-control" id="modal-buildingNumber" name="buildingNumber" max="50" min="0"/>
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="modal-floorNumber" class="control-label">楼层:</label>
+                            <input type="number" class="form-control" id="modal-floorNumber" name="floorNumber" max="50" min="-10"/>
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="modal-houseNumber" class="control-label">住房号:</label>
+                            <input type="number" class="form-control" id="modal-houseNumber" name="houseNumber" min="100"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-price" class="control-label">价格:</label>
+                        <input type="number" class="form-control" id="modal-price" name="price" max="2000" min="0" step="5" />
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-customerId" class="control-label">租户ID:</label>
+                        <input type="number" class="form-control" id="modal-customerId" name="customerId"
+                               min="0"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="state" class="control-label">状态:</label>
+                        <div id="modal-state">
+                            <label class="radio-inline" style="padding-left: 30px;">
+                                <input type="radio" name="state" value="1" style="margin-left: -30px" checked="checked" />
+                                <span>待租</span>
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="state" value="2" style="margin-left: -30px"/>
+                                <span>已被租</span>
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="state" value="3" style="margin-left: -30px"/>
+                                <span>在建</span>
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="state" value="4" style="margin-left: -30px"/>
+                                <span>欠费</span>
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="state" value="4" style="margin-left: -30px"/>
+                                <span>其他</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-introduce" class="control-label">简介:</label>
+                        <textarea id="modal-introduce" placeholder="房屋简介"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary">提交</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -221,43 +313,74 @@
             contentType: "application/json; charset=utf-8",
             dataType: 'JSON',
             success:function(data){
-            $("#total_count").html(data.totalElements);
-            $("#current_page").html(Number(data.number) + Number(1) +"/" + data.totalPages);
-            if(data.totalPages!=0){
-                $('#page').bootstrapPaginator({
-                    currentPage: Number(data.number) + Number(1),//当前的请求页面。
-                    bootstrapMajorVersion: 3,//bootstrap的版本要求。
-                    totalPages: data.totalPages//一共多少页。
+                $("#total_count").html(data.totalElements);
+                $("#current_page").html(Number(data.number) + Number(1) +"/" + data.totalPages);
+                if(data.totalPages!=0){
+                    $('#page').bootstrapPaginator({
+                        currentPage: Number(data.number) + Number(1),//当前的请求页面。
+                        bootstrapMajorVersion: 3,//bootstrap的版本要求。
+                        totalPages: data.totalPages//一共多少页。
+                    });
+                }
+                var tbody = "";
+                $.each(data.content, function(id, house){
+                    if(house.introduce == null){
+                        house.introduce = "此处省略xxx字";
+                    }
+                    if(house.customerId == null){
+                        house.customerId = "待租";
+                    }
+                    tbody += "<tr><td class=\"table-community\">" + house.community + "</td>" +
+                        "<td class=\"table-buildingNumber\">" + house.buildingNumber + "</td>" +
+                        "<td class=\"table-customerId\">" + house.customerId + "</td>" +
+                        "<td class=\"table-houseType\">" + house.houseType+ "</td>" +
+                        "<td class=\"table-price\">" + house.price + "</td>" +
+                        "<td class=\"table-floorNumber\">" + house.floorNumber + "</td>" +
+                        "<td class=\"table-houseNumber\">" + house.houseNumber + "</td>";
+                    var state = house.state;
+                    if(house.state){
+                        tbody += "<td class=\"table-state\" value=\"2\" >" + "已被租" + "</td>";
+                    }else {
+                        tbody += "<td class=\"table-state\" value=\"1\" >" + "待租" + "</td>";
+                    }
+                    tbody += "<td class=\"table-introduce\">" + house.introduce + "</td>";
+                    tbody += "<td id=\""+ house.id+"\">" +
+                        "<button data-toggle=\"modal\" data-target=\"#editModal\" class=\"btn btn-primary btn-xs\" type=\"button\">" +
+                        "<i class=\"fa fa-edit\"></i> 修改</button> " +
+                        "<button onclick=\"delete_house(" + house.id +")\" class=\"btn btn-danger btn-xs\" type=\"button\">" +
+                        "<i class=\"fa fa-trash-o fa-lg\"></i> 删除</button></td><tr>";
                 });
-            }
-            var tbody = "";
-            $.each(data.content, function(id, house){
-                tbody += "<tr><td>" + house.community + "</td>" +
-                    "<td>#" + house.buildingNumber + "-" + house.floorNumber + "</td>" +
-                    "<td>" + house.customerId + "</td>" +
-                    "<td>" + house.houseType+ "</td>" +
-                    "<td>" + house.price + "</td>" +
-                    "<td>" + house.address + "</td>";
-                var state = house.state;
-                if(house.state){
-                    tbody += "<td>" + "待租" + "</td>";
-                }else {
-                    tbody += "<td>" + "租用中" + "</td>";
+                if(tbody.length==0){
+                    tbody = "<div class=\"alert alert-danger\">暂无数据，请修改查询条件。</div>";
                 }
-                if(house.introduce != null){
-                    tbody += "<td>" + house.introduce + "</td></tr>";
-                }else{
-                    tbody += "<td>" + "此处省略xxx字" + "</td></tr>";
-                }
-            });
-            if(tbody.length==0){
-                tbody = "<div class=\"alert alert-danger\">暂无数据，请修改查询条件。</div>";
+                $("#my_tbody").html(tbody);
             }
-            $("#my_tbody").html(tbody);
-        }
     });
     };
+
+    function delete_house(value){
+        console.log("delete_house: " + value);
+    }
     /*]]>*/
+</script>
+
+<script>
+    $('#editModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // 触发事件的按钮
+        var row = button.parent().parent();
+        var modal = $(this); //模态框
+        modal.find('#modal-community').val(row.find(".table-community").text());
+        modal.find('#modal-houseType').val(row.find(".table-houseType").text());
+        modal.find('#modal-buildingNumber').val(row.find(".table-buildingNumber").text());
+        modal.find('#modal-floorNumber').val(row.find(".table-floorNumber").text());
+        modal.find('#modal-houseNumber').val(row.find(".table-houseNumber").text());
+        modal.find('#modal-price').val(row.find(".table-price").text());
+        modal.find('#modal-customerId').val(row.find(".table-customerId").text());
+        var radio = Number(row.find(".table-state").attr("value")) - 1;
+        console.log(radio);
+        modal.find('#modal-state').find("input[name='state']").eq(radio).attr("checked", "checked");
+        modal.find('#modal-introduce').val(row.find(".table-introduce").text());
+    });
 </script>
 </body>
 </html>
