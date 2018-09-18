@@ -17,7 +17,7 @@ public class House extends BaseEntity {
 
 	private Double area;
 
-	private Boolean state;
+	private Integer state;
 
 	private Double price;
 
@@ -75,11 +75,11 @@ public class House extends BaseEntity {
 		this.area = area;
 	}
 
-	public Boolean getState() {
+	public Integer getState() {
 		return state;
 	}
 
-	public void setState(Boolean state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 

@@ -32,9 +32,9 @@ public class HouseManagerTest {
                     house.setPrice(i * 100.5);
                     house.setAddress("address_" + i);
                     house.setArea(i * 4.5);
-                    house.setState(false);
+                    house.setState(0);
                     if(i % 2 == 1){
-                        house.setState(true);
+                        house.setState(1);
                         house.setCustomerId((long) i);
                     }
                     switch (j){

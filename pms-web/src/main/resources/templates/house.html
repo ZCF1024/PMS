@@ -99,8 +99,11 @@
                             <div class="input-group">
                                 <span class="input-group-addon">状态</span>
                                 <select id="state" name="state" class="form-control">
-                                    <option value="false" selected="selected">待租</option>
-                                    <option value="true">已被租</option>
+                                    <option value="0" selected="selected">待租</option>
+                                    <option value="1">租用中</option>
+                                    <option value="2">在建</option>
+                                    <option value="3">欠费</option>
+                                    <option value="4">其他</option>
                                 </select>
                             </div>
                         </div>
@@ -134,8 +137,11 @@
                                 <td class="table-price" th:text="${house.price}">${house.price}</td>
                                 <td class="table-floorNumber" th:text="${house.floorNumber}">${house.floorNumber}</td>
                                 <td class="table-houseNumber" th:text="${house.houseNumber}">${house.houseNumber}</td>
-                                <td class="table-state" value="1" th:if="${house.state}==false">待租</td>
-                                <td class="table-state" th:value="2" th:if="${house.state}==true">使用中</td>
+                                <td class="table-state" value="0" th:if="${house.state}==0">待租</td>
+                                <td class="table-state" value="1" th:if="${house.state}==1">租用中</td>
+                                <td class="table-state" value="2" th:if="${house.state}==2">在建</td>
+                                <td class="table-state" value="3" th:if="${house.state}==3">欠费</td>
+                                <td class="table-state" value="4" th:if="${house.state}==4">其他</td>
                                 <td class="table-introduce" th:text="${house.introduce == null} ? '此处省略xxx字' : ${house.introduce}">${house.introduce}</td>
                                 <td th:id="${house.id}">
                                     <button data-toggle="modal" data-target="#editModal" class="btn btn-primary btn-xs" type="button">
@@ -338,10 +344,12 @@
                         "<td class=\"table-floorNumber\">" + house.floorNumber + "</td>" +
                         "<td class=\"table-houseNumber\">" + house.houseNumber + "</td>";
                     var state = house.state;
-                    if(house.state){
-                        tbody += "<td class=\"table-state\" value=\"2\" >" + "已被租" + "</td>";
-                    }else {
-                        tbody += "<td class=\"table-state\" value=\"1\" >" + "待租" + "</td>";
+                    switch (state) {
+                        case 0 : tbody += "<td class=\"table-state\" value=\"1\" >" + "待租" + "</td>"; break;
+                        case 1 : tbody += "<td class=\"table-state\" value=\"2\" >" + "租用中" + "</td>"; break;
+                        case 2 : tbody += "<td class=\"table-state\" value=\"3\" >" + "在建" + "</td>"; break;
+                        case 3 : tbody += "<td class=\"table-state\" value=\"4\" >" + "欠费" + "</td>"; break;
+                        case 4 : tbody += "<td class=\"table-state\" value=\"0\" >" + "其他" + "</td>"; break;
                     }
                     tbody += "<td class=\"table-introduce\">" + house.introduce + "</td>";
                     tbody += "<td id=\""+ house.id+"\">" +
@@ -376,8 +384,8 @@
         modal.find('#modal-houseNumber').val(row.find(".table-houseNumber").text());
         modal.find('#modal-price').val(row.find(".table-price").text());
         modal.find('#modal-customerId').val(row.find(".table-customerId").text());
-        var radio = Number(row.find(".table-state").attr("value")) - 1;
-        console.log(radio);
+        var radio = Number(row.find(".table-state").attr("value"));
+        radio = (radio + 1)  % 5;
         modal.find('#modal-state').find("input[name='state']").eq(radio).attr("checked", "checked");
         modal.find('#modal-introduce').val(row.find(".table-introduce").text());
     });

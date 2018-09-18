@@ -38,7 +38,7 @@ public class HouseViewController {
 
     @GetMapping("house")
     public ModelAndView house(House house, ModelAndView modelAndView){
-        house.setState(false);
+        house.setState(0);
         modelAndView.addObject("communities", this.houseManager.getCommunities());
         modelAndView.addObject("types", this.houseManager.getHouseTypes());
         modelAndView.addObject("datas", this.houseManager.findAll(0, pageSize, house));
@@ -48,7 +48,7 @@ public class HouseViewController {
 
     @GetMapping("choose")
     public ModelAndView choose(House house, ModelAndView modelAndView){
-        house.setState(false);
+        house.setState(0);
         modelAndView.addObject("communities", this.houseManager.getCommunities());
         modelAndView.setViewName("choose_house");
         return  modelAndView;

@@ -32,6 +32,6 @@ public class FieldUtils {
             {"dateCreated", "投入时间"}, {"dateModified", "检修时间"}, {"deleted", "状态", "废弃", "使用中"}};
 
     public static final String[][] HOUSE_FIELDS = {{"id", "ID"}, {"address", "所在地址"}, {"area", "面积"}, {"price", "价格"},
-            {"state", "状态", "空闲", "租用中"}, {"introduce", "房屋简介"}, {"customerId", "用户ID"},{"entityType", "实体类型"},
-            {"dateCreated", "开放时间"}, {"dateModified", "修改时间"}, {"deleted", "状态", "废弃", "可用"}};
+            {"state", "待租", "使用中", "在建", "欠费", "正常"}, {"introduce", "房屋简介"}, {"customerId", "用户ID"},{"entityType", "实体类型"},
+            {"dateCreated", "开放时间"}, {"dateModified", "修改时间"}, {"deleted", "状态", "废弃", "正常"}};
 }

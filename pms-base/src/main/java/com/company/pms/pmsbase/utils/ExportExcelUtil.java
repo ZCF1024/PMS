@@ -189,6 +189,10 @@ public class ExportExcelUtil<T> {
                             bsValue, HSSFWorkbook.PICTURE_TYPE_JPEG));
                 }else{
                     // 其它数据类型都当作字符串简单处理
+                    // System.out.println(headers[i][0]);
+                    if(value == null){
+                        value = "未知";
+                    }
                     textValue = value.toString();
                 }
 
