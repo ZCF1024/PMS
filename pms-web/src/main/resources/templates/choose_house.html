@@ -75,7 +75,7 @@
                                         <div class="row clearfix">
                                             <div class="col-md-6 col-sm-6 col-xs-6">
                                                 <i class="fa fa-location-arrow"></i>
-                                                <span class="myState" style="color: #000000">xxx小区x号楼</span>
+                                                <span class="myState" id="house-title">位置</span>
                                             </div>
                                             <div class="col-md-1 col-sm-1 col-xs-1">
                                                 <span class="myState" style="background-color: lightgreen">待租</span>
@@ -263,7 +263,16 @@
         });
     };
     function get_house(community, number) {
-        console.log("小区： *"+ community + "*  楼号：*" + number + "*");
+        $("#house-title").text(community + number + "号楼");
+        $.ajax({
+            url : [[@{/api/house/gethousebybuilding}]],
+            type: 'post',
+            data: {'community': community, 'buildingNumber': number};
+            dataType: 'JSON',
+            success: function (data) {
+                console.log(data.size());
+           }
+        });
     }
     /*]]>*/
 </script>

@@ -44,6 +44,12 @@ public class House extends BaseEntity {
 		this.setEntityType(EntityTypeEnum.House.ordinal());
 	}
 
+	public House(Long id, String community, Integer buildingNumber) {
+		this.id = id;
+		this.community = community;
+		this.buildingNumber = buildingNumber;
+	}
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("id", id).append(" address", address)

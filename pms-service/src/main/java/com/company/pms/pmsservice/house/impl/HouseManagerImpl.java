@@ -47,6 +47,7 @@ public class HouseManagerImpl extends GenericManagerImpl<House, Long> implements
                 if(null != house.getState()){
                     list.add(criteriaBuilder.equal(root.get("state").as(Boolean.class), house.getState()));
                 }
+                list.add(criteriaBuilder.equal(root.get("deleted").as(Boolean.class), false));
                 Predicate[] predicates = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(predicates));
             }

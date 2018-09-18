@@ -30,6 +30,11 @@ public class HouseAPIController extends GenericController<House, Long, HouseMana
         return "House Index";
     }
 
+    @PostMapping("gethousebybuilding")
+    public List<House> getHouses(String community, Integer buildingNumber){
+        return null;
+    }
+
     @PostMapping("building")
     public List<Integer> building(String community){
         return this.houseManager.getBuildingNumbers(community);

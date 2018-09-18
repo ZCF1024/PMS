@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface HouseRepository extends GenericRepository<House, Long> {
 
+    @Query("select house.floorNumber, house.houseNumber from House house where house.community=?1 and buildingNumber=?2 and house.deleted=?3")
+    List<House> getHouseByCommunityAndBuildingNumberAndDeleted(String community, Integer buildingNumber, Boolean deleted);
+
     @Query(value = "select community from house group by community order by community", nativeQuery = true)
     List<String> getCommunities();
 

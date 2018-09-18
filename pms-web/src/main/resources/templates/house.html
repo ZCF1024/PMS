@@ -8,7 +8,6 @@
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" />
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
@@ -147,7 +146,7 @@
                                     <button data-toggle="modal" data-target="#editModal" class="btn btn-primary btn-xs" type="button">
                                         <i class="fa fa-edit"></i> 修改
                                     </button>
-                                    <button th:onclick="|delete_house('${house.id}')|" class="btn btn-danger btn-xs" type="button">
+                                    <button data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-xs" type="button">
                                         <i class="fa fa-trash-o fa-lg"></i> 删除
                                     </button>
                                 </td>
@@ -212,25 +211,29 @@
                     <div class="form-group">
                         <label for="modal-customerId" class="control-label">租户ID:</label>
                         <input type="number" class="form-control" id="modal-customerId" name="customerId"
-                               min="0"/>
+                               min="0" onchange="modal_customer_change(this)"/>
                     </div>
                     <div class="form-group">
                         <label for="state" class="control-label">状态:</label>
                         <div id="modal-state">
-                            <label class="radio-inline" style="padding-left: 30px;">
-                                <input type="radio" name="state" value="1" style="margin-left: -30px" checked="checked" />
+                            <label class="radio-inline" style="padding-left: 30px;" title="注意" data-container="body" data-toggle="popover"
+                                   data-placement="top" data-content="请先置空租户ID">
+                                <input type="radio" name="state" value="0" style="margin-left: -30px" checked="checked" />
                                 <span>待租</span>
                             </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="state" value="2" style="margin-left: -30px"/>
-                                <span>已被租</span>
+                            <label class="radio-inline" title="注意" data-container="body" data-toggle="popover"
+                                   data-placement="top" data-content="请先填写租户ID">
+                                <input type="radio" name="state" value="1" style="margin-left: -30px"/>
+                                <span>租用中</span>
                             </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="state" value="3" style="margin-left: -30px"/>
+                            <label class="radio-inline" title="注意" data-container="body" data-toggle="popover"
+                                   data-placement="top" data-content="请先置空租户ID">
+                                <input type="radio" name="state" value="2" style="margin-left: -30px"/>
                                 <span>在建</span>
                             </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="state" value="4" style="margin-left: -30px"/>
+                            <label class="radio-inline" title="注意" data-container="body" data-toggle="popover"
+                                   data-placement="top" data-content="请先填写租户ID">
+                                <input type="radio" name="state" value="3" style="margin-left: -30px"/>
                                 <span>欠费</span>
                             </label>
                             <label class="radio-inline">
@@ -252,6 +255,31 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                </button>
+                <h4 class="modal-title" id="deleteModalLabel">删除房屋信息</h4>
+            </div>
+            <div class="modal-body">
+                <span class="modal-tips">
+                    <i class="fa fa-warning fa-4x"></i><span>是否删除该房屋信息</span>
+                </span>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                <i class="fa fa-minus-square"></i> 取消
+            </button>
+                <button class="btn btn-danger" onclick="delete_house()" type="button">
+                    <i class="fa fa-trash-o fa-lg"></i> 删除
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="clearfix"></div>
 
@@ -264,10 +292,14 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     $(document).ready(function(){
+        $("[data-toggle='popover']").popover();
         $("#total_count").html([[${datas.totalElements}]]);
         $("#current_page").html(Number([[${datas.number}]]) + Number(1) +"/" + [[${datas.totalPages}]]);
         $("#a_clear").click(function () {
             $('#house_number').val("");
+        });
+        $("#modal-state label").mouseout(function () {
+            $(this).popover("hide");
         });
     });
 
@@ -345,17 +377,18 @@
                         "<td class=\"table-houseNumber\">" + house.houseNumber + "</td>";
                     var state = house.state;
                     switch (state) {
-                        case 0 : tbody += "<td class=\"table-state\" value=\"1\" >" + "待租" + "</td>"; break;
-                        case 1 : tbody += "<td class=\"table-state\" value=\"2\" >" + "租用中" + "</td>"; break;
-                        case 2 : tbody += "<td class=\"table-state\" value=\"3\" >" + "在建" + "</td>"; break;
-                        case 3 : tbody += "<td class=\"table-state\" value=\"4\" >" + "欠费" + "</td>"; break;
-                        case 4 : tbody += "<td class=\"table-state\" value=\"0\" >" + "其他" + "</td>"; break;
+                        case 0 : tbody += "<td class=\"table-state\" value=\"0\" >" + "待租" + "</td>"; break;
+                        case 1 : tbody += "<td class=\"table-state\" value=\"1\" >" + "租用中" + "</td>"; break;
+                        case 2 : tbody += "<td class=\"table-state\" value=\"2\" >" + "在建" + "</td>"; break;
+                        case 3 : tbody += "<td class=\"table-state\" value=\"3\" >" + "欠费" + "</td>"; break;
+                        case 4 : tbody += "<td class=\"table-state\" value=\"4\" >" + "其他" + "</td>"; break;
+                        default : break;
                     }
                     tbody += "<td class=\"table-introduce\">" + house.introduce + "</td>";
                     tbody += "<td id=\""+ house.id+"\">" +
                         "<button data-toggle=\"modal\" data-target=\"#editModal\" class=\"btn btn-primary btn-xs\" type=\"button\">" +
                         "<i class=\"fa fa-edit\"></i> 修改</button> " +
-                        "<button onclick=\"delete_house(" + house.id +")\" class=\"btn btn-danger btn-xs\" type=\"button\">" +
+                        "<button data-toggle=\"modal\" data-target=\"#deleteModal\" class=\"btn btn-danger btn-xs\" type=\"button\">" +
                         "<i class=\"fa fa-trash-o fa-lg\"></i> 删除</button></td><tr>";
                 });
                 if(tbody.length==0){
@@ -366,8 +399,33 @@
     });
     };
 
-    function delete_house(value){
-        console.log("delete_house: " + value);
+    function delete_house(){
+        console.log("delete_house: ");
+    }
+
+    $("modal-body").find("input[name='state']").click(function () {
+        console.log($(this).attr("disabled"));
+        if($(this).attr("disabled") == true) {
+            console.log("修改-----")
+        }
+    });
+
+    function modal_customer_change(id){
+        var inputs = $('#modal-state').find("input[name='state']");
+        // inputs.removeAttr("checked");
+        if(id.value != null && id.value != ""){
+            inputs.eq(1).attr("checked", true).prop("checked", true);
+            inputs.eq(0).attr("disabled", true).prop("disabled", true);
+            inputs.eq(2).attr("disabled", true).prop("disabled", true);
+            inputs.eq(1).attr("disabled", false).prop("disabled", false);
+            inputs.eq(3).attr("disabled", false).prop("disabled", false);
+        }else {
+            inputs.eq(0).attr("checked", true).prop("checked", true);
+            inputs.eq(0).attr("disabled", false).prop("disabled", false);
+            inputs.eq(2).attr("disabled", false).prop("disabled", false);
+            inputs.eq(1).attr("disabled", true).prop("disabled", true);
+            inputs.eq(3).attr("disabled", true).prop("disabled", true);
+        }
     }
     /*]]>*/
 </script>
@@ -383,11 +441,20 @@
         modal.find('#modal-floorNumber').val(row.find(".table-floorNumber").text());
         modal.find('#modal-houseNumber').val(row.find(".table-houseNumber").text());
         modal.find('#modal-price').val(row.find(".table-price").text());
-        modal.find('#modal-customerId').val(row.find(".table-customerId").text());
         var radio = Number(row.find(".table-state").attr("value"));
-        radio = (radio + 1)  % 5;
-        modal.find('#modal-state').find("input[name='state']").eq(radio).attr("checked", "checked");
+        modal.find('#modal-state').find("input[name='state']").eq(radio).attr("checked", true);
         modal.find('#modal-introduce').val(row.find(".table-introduce").text());
+        var customerId = row.find(".table-customerId").text();
+        var inputs = modal.find('#modal-state').find("input[name='state']");
+        console.log("customer: " + customerId + " state: " + radio);
+        if(customerId == null || customerId == "待租"){
+            inputs.eq(1).attr("disabled",true);
+            inputs.eq(3).attr("disabled",true);
+        }else {
+            modal.find('#modal-customerId').val(customerId);
+            inputs.eq(0).attr("disabled",true);
+            inputs.eq(2).attr("disabled",true);
+        }
     });
 </script>
 </body>

@@ -1,5 +1,6 @@
 package com.company.pms.pmsrepository.house;
 
+import com.company.pms.pmsrepository.house.domain.House;
 import com.company.pms.pmsrepository.house.repository.HouseRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,16 @@ import java.util.List;
 public class HouseRepositoryTest {
 
     private HouseRepository houseRepository;
+
+    @Test
+    public void testGetHouseByCommunityAndBuilding(){
+        List<House> houses = this.houseRepository.getHouseByCommunityAndBuildingNumberAndDeleted("合胜园小区", 1, false);
+        System.out.println("size: =======" + houses.size() + "==========");
+        for(House house : houses){
+            Integer floor = ((House) house).getFloorNumber();
+            System.out.println(floor);
+        }
+    }
 
     @Test
     public void testGetCommunities(){

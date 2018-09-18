@@ -1,5 +1,5 @@
 ﻿.modal-header{
-    background-color: #ACDEF6;
+    background-color: #3BBFB4;
     color: white;
     border-top-left-radius: .25rem;
     border-top-right-radius: .25rem;
@@ -61,6 +61,24 @@ input:checked {
     height: 100px;
 }
 
+#deleteModal .modal-content {
+    width: 350px;
+}
+
+#deleteModal .modal-body {
+    height: 100px;
+}
+
+#deleteModal .modal-footer button {
+    margin-left: 15px;
+}
+
+#deleteModal .modal-tips span {
+    font-weight: bolder;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
 input[type="radio"] {
     border-radius: 3px;
     margin-left: -30px;
@@ -88,6 +106,10 @@ input[type="radio"] {
     color: white;
     font-size: 16px;
     padding: 5px 8px 3px 8px;
+}
+
+#house-title {
+    color: #000000;
 }
 
 #mymenu{
