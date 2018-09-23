@@ -34,7 +34,7 @@ public abstract class GenericController<T extends BaseEntity, PK extends Seriali
 	 * @param model
 	 * @return
 	 */
-	@GetMapping(value = "/", produces = "application/json", consumes = "application/json")
+	@PostMapping(value = "/", produces = "application/json", consumes = "application/json")
 	public T create(@RequestBody T model) {
 		this.model = model;
 		Date date = new Date();
@@ -96,7 +96,7 @@ public abstract class GenericController<T extends BaseEntity, PK extends Seriali
 		T tmodel = this.manager.findById(id);
 		UpdateUtils.copyNotNullProperties(model, tmodel);
 		this.model = this.manager.save(tmodel);
-		return this.model;
+		return model;
 	}
 
 }

@@ -26,5 +26,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 @NoRepositoryBean
 public interface GenericRepository<T extends BaseEntity, PK extends Serializable>
 		extends JpaRepository<T, PK>, JpaSpecificationExecutor<T> {
+
 	List<T> findAllByDeleted(Boolean deleted);
 }

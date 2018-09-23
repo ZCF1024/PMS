@@ -47,7 +47,7 @@ public class HouseManagerTest {
                             default: break;
                         }
                         house.setBuildingNumber(building);
-                        house.setFloorNumber(i);
+                        house.setFloorNumber(floor);
                         // 每层有三个单元， 每个单元 3 户
                         //房号 = 楼层号 + 单元号 + 住户号
                         house.setHouseNumber(100 * floor + (i/3 + 1) * 10 + (i%3 + 1));

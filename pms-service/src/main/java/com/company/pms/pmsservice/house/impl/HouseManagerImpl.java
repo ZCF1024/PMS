@@ -2,6 +2,8 @@ package com.company.pms.pmsservice.house.impl;
 
 import com.company.pms.pmsbase.service.impl.GenericManagerImpl;
 import com.company.pms.pmsrepository.house.domain.House;
+import com.company.pms.pmsrepository.house.domain.HouseLocation;
+import com.company.pms.pmsrepository.house.repository.HouseLocationRepository;
 import com.company.pms.pmsrepository.house.repository.HouseRepository;
 import com.company.pms.pmsservice.house.HouseManager;
 
@@ -24,6 +26,8 @@ import java.util.List;
 public class HouseManagerImpl extends GenericManagerImpl<House, Long> implements HouseManager {
 
     private HouseRepository houseRepository;
+
+    private HouseLocationRepository locationRepository;
 
     @Override
     public Page<House> findAll(Integer page, Integer size, House house) {
@@ -66,13 +70,23 @@ public class HouseManagerImpl extends GenericManagerImpl<House, Long> implements
     }
 
     @Override
-    public List<Integer> getFloorNumbers(String community, Integer buildingNumber) {
-        return this.houseRepository.getFloorNumbers(community, buildingNumber);
+    public List<HouseLocation> getHouseLocations(String community, Integer buildingNumber) {
+        return this.locationRepository.getAllByCommunityAndBuildingNumber(community, buildingNumber);
     }
 
     @Override
     public List<String> getHouseTypes() {
         return this.houseRepository.getHouseTypes();
+    }
+
+    @Override
+    public Integer deleteOne(Long id) {
+        return this.houseRepository.updateDeletedById(id, true);
+    }
+
+    @Override
+    public Integer getMaxFloorNumber(String community, Integer buildingNumber) {
+        return this.houseRepository.getMaxFloorNumber(community, buildingNumber);
     }
 
     @Autowired
@@ -81,4 +95,8 @@ public class HouseManagerImpl extends GenericManagerImpl<House, Long> implements
         this.repository = this.houseRepository;
     }
 
+    @Autowired
+    public void setLocationRepository(HouseLocationRepository locationRepository) {
+        this.locationRepository = locationRepository;
+    }
 }

@@ -1,0 +1,2 @@
+house_location:
+    CREATE VIEW house_location as select id, community, building_number, floor_number, house_number, state from house where deleted=0 

@@ -1,4 +1,8 @@
-﻿.modal-header{
+﻿.house-data-table-body a{
+    color: #ffffff;
+}
+
+.modal-header{
     background-color: #3BBFB4;
     color: white;
     border-top-left-radius: .25rem;
@@ -73,10 +77,27 @@ input:checked {
     margin-left: 15px;
 }
 
-#deleteModal .modal-tips span {
-    font-weight: bolder;
-    font-size: 16px;
-    margin-left: 10px;
+#deleteModal {
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+#tipModal .modal-content {
+    width: 250px;
+    font-size: 17px;
+}
+
+#tipModal .modal-body {
+    height: 100px;
+}
+
+#tipModal {
+    position: absolute;
+    top: 60%;
+    left: 60%;
+    transform: translateX(-50%) translateY(-50%);
 }
 
 input[type="radio"] {

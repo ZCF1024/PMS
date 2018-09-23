@@ -250,19 +250,19 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">提交</button>
+                <button type="button" class="btn btn-primary" id="modal-submit"  data-id="-111" onclick="updateHouse()">提交</button>
             </div>
         </div>
     </div>
 </div>
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><i class="fa fa-close"></i></span>
                 </button>
-                <h4 class="modal-title" id="deleteModalLabel">删除房屋信息</h4>
+                <h4 class="modal-title" id="deleteModalLabel"><i class="fa fa-warning"></i> 删除房屋信息</h4>
             </div>
             <div class="modal-body">
                 <span class="modal-tips">
@@ -271,11 +271,25 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-dismiss="modal" type="button">
-                <i class="fa fa-minus-square"></i> 取消
-            </button>
-                <button class="btn btn-danger" onclick="delete_house()" type="button">
+                    <i class="fa fa-minus-square"></i> 取消
+                </button>
+                <button class="btn btn-danger delete-button" data-id="-111" onclick="delete_house(this)" type="button">
                     <i class="fa fa-trash-o fa-lg"></i> 删除
                 </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="tipModalLabel">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="tipModalLabel"><i class="fa fa-warning"></i> 提示</h4>
+            </div>
+            <div class="modal-body">
+                <span class="modal-tips">
+                    <span>删除成功</span>
+                </span>
             </div>
         </div>
     </div>
@@ -306,9 +320,9 @@
     function community_change(value) {
         $.ajax({
             url: [[@{/api/house/building}]],
-        type:'post',
+            type:'post',
             data:{'community': value},
-        dataType: 'JSON',
+            dataType: 'JSON',
             success:function(data){
             var option = "<option value=''>请选择</option>";
             $.each(data, function(id, text){
@@ -318,6 +332,7 @@
         }
     });
     };
+
     $('#page').bootstrapPaginator({
         currentPage: [[${datas.number}]] + 1,//当前的请求页面。
         totalPages: [[${datas.totalPages}]],//一共多少页。
@@ -343,6 +358,7 @@
             load_data(page-1);
         }
     });
+
     function load_data(page) {
         $.ajax({
             url: [[@{/api/house/search/}]] + page,
@@ -399,8 +415,56 @@
     });
     };
 
-    function delete_house(){
-        console.log("delete_house: ");
+    function delete_house(element){
+        var id = $(element).prop("data-id");
+        $.ajax({
+            url: [[@{/api/house/delete}]],
+            type: 'post',
+            data: {"id": id},
+            dataType: 'JSON',
+            success: function(data) {
+                $("#deleteModal").modal("hide");
+                if(data != 1){
+                    $("#tipModal").find(".modal-tips").text("操作错误，请重试");
+                }
+                $("#tipModal").modal("show");
+                setTimeout("$(\"#tipModal\").modal(\"hide\")",1000);
+                load_data(0);
+                // console.log("id: " + id + " result: " + data)
+            }
+        });
+    }
+
+    function updateHouse() {
+        var id = $("#modal-submit").prop("data-id");
+        $.ajax({
+            url: [[@{/api/house/}]] + id,
+            type: 'put',
+            data: JSON.stringify({
+            "community": $("#modal-community").val(),
+            "buildingNumber": $("#modal-buildingNumber").val(),
+            "houseType": $("#modal-houseType").val(),
+            "floorNumber": $("#modal-floorNumber").val(),
+            "houseNumber": $("#modal-houseNumber").val(),
+            "price": $("#modal-price").val(),
+            "customerId": $("#modal-customerId").val(),
+            "introduce": $("#modal-introduce").val(),
+            "state": $("#modal-state").find("input[name='state']").val()
+            }),
+            dataType: 'JSON',
+            contentType: "application/json; charset=utf-8",
+            success: function (data){
+                if(data != null && data.id != null){
+                    $("#tipModal").find(".modal-tips").text("修改成功");
+                    $("#editModal").modal("hide");
+                    load_data(0);
+                }else{
+                    $("#tipModal").find(".modal-tips").text("修改失败，请重试");
+                }
+                $("#tipModal").modal("show");
+                setTimeout("$(\"#tipModal\").modal(\"hide\")",1000);
+            }
+        });
     }
 
     $("modal-body").find("input[name='state']").click(function () {
@@ -414,17 +478,17 @@
         var inputs = $('#modal-state').find("input[name='state']");
         // inputs.removeAttr("checked");
         if(id.value != null && id.value != ""){
-            inputs.eq(1).attr("checked", true).prop("checked", true);
-            inputs.eq(0).attr("disabled", true).prop("disabled", true);
-            inputs.eq(2).attr("disabled", true).prop("disabled", true);
-            inputs.eq(1).attr("disabled", false).prop("disabled", false);
-            inputs.eq(3).attr("disabled", false).prop("disabled", false);
+            inputs.eq(1).prop("checked", true);
+            inputs.eq(0).prop("disabled", true);
+            inputs.eq(2).prop("disabled", true);
+            inputs.eq(1).prop("disabled", false);
+            inputs.eq(3).prop("disabled", false);
         }else {
-            inputs.eq(0).attr("checked", true).prop("checked", true);
-            inputs.eq(0).attr("disabled", false).prop("disabled", false);
-            inputs.eq(2).attr("disabled", false).prop("disabled", false);
-            inputs.eq(1).attr("disabled", true).prop("disabled", true);
-            inputs.eq(3).attr("disabled", true).prop("disabled", true);
+            inputs.eq(0).prop("checked", true);
+            inputs.eq(0).prop("disabled", false);
+            inputs.eq(2).prop("disabled", false);
+            inputs.eq(1).prop("disabled", true);
+            inputs.eq(3).prop("disabled", true);
         }
     }
     /*]]>*/
@@ -435,26 +499,31 @@
         var button = $(event.relatedTarget); // 触发事件的按钮
         var row = button.parent().parent();
         var modal = $(this); //模态框
-        modal.find('#modal-community').val(row.find(".table-community").text());
-        modal.find('#modal-houseType').val(row.find(".table-houseType").text());
-        modal.find('#modal-buildingNumber').val(row.find(".table-buildingNumber").text());
-        modal.find('#modal-floorNumber').val(row.find(".table-floorNumber").text());
-        modal.find('#modal-houseNumber').val(row.find(".table-houseNumber").text());
-        modal.find('#modal-price').val(row.find(".table-price").text());
+        $("#modal-submit").prop("data-id", button.parent().prop("id"));
+        $('#modal-community').val(row.find(".table-community").text());
+        $('#modal-houseType').val(row.find(".table-houseType").text());
+        $('#modal-buildingNumber').val(row.find(".table-buildingNumber").text());
+        $('#modal-floorNumber').val(row.find(".table-floorNumber").text());
+        $('#modal-houseNumber').val(row.find(".table-houseNumber").text());
+        $('#modal-price').val(row.find(".table-price").text());
         var radio = Number(row.find(".table-state").attr("value"));
-        modal.find('#modal-state').find("input[name='state']").eq(radio).attr("checked", true);
-        modal.find('#modal-introduce').val(row.find(".table-introduce").text());
+        $('#modal-state').find("input[name='state']").eq(radio).prop("checked", true);
+        $('#modal-introduce').val(row.find(".table-introduce").text());
         var customerId = row.find(".table-customerId").text();
-        var inputs = modal.find('#modal-state').find("input[name='state']");
-        console.log("customer: " + customerId + " state: " + radio);
+        var inputs = $('#modal-state').find("input[name='state']");
+        console.log("id: "+ button.parent().prop("id") +" customer: " + customerId + " state: " + radio);
         if(customerId == null || customerId == "待租"){
-            inputs.eq(1).attr("disabled",true);
-            inputs.eq(3).attr("disabled",true);
+            inputs.eq(1).prop("disabled",true);
+            inputs.eq(3).prop("disabled",true);
         }else {
-            modal.find('#modal-customerId').val(customerId);
-            inputs.eq(0).attr("disabled",true);
-            inputs.eq(2).attr("disabled",true);
+            $('#modal-customerId').val(customerId);
+            inputs.eq(0).prop("disabled",true);
+            inputs.eq(2).prop("disabled",true);
         }
+    });
+    $('#deleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // 触发事件的按钮
+        $(this).find(".delete-button").prop("data-id", button.parent().prop("id"));
     });
 </script>
 </body>
