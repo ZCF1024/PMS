@@ -60,9 +60,9 @@ public class TimeUtil {
 
     private TimeUtil(){ }
 
-    public static void main(String[] args){
-        System.out.println(getTime("yyyy-MM-dd HH:mm:ss"));
-        System.out.println(getTime(new Date(0), "yyyy-MM-dd HH:mm:sss"));
-        System.out.println(getTimeStamp());
-    }
+//    public static void main(String[] args){
+//        System.out.println(getTime("yyyy-MM-dd HH:mm:ss"));
+//        System.out.println(getTime(new Date(0), "yyyy-MM-dd HH:mm:sss"));
+//        System.out.println(getTimeStamp());
+//    }
 }

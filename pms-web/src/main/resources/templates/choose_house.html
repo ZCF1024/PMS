@@ -78,16 +78,16 @@
                                                 <span class="myState" id="house-title">位置</span>
                                             </div>
                                             <div class="col-md-1 col-sm-1 col-xs-1">
-                                                <span class="myState" style="background-color: #4B0082">待租</span>
+                                                <span class="myState" style="background-color: #F17060">待租</span>
                                             </div>
                                             <div class="col-md-1 col-sm-1 col-xs-1">
                                                 <span class="myState" style="background-color: #EEC591">租用中</span>
                                             </div>
                                             <div class="col-md-1 col-sm-1 col-xs-1">
-                                                <span class="myState" style="background-color: #953b39">在建</span>
+                                                <span class="myState" style="background-color: #14C1d7">在建</span>
                                             </div>
                                             <div class="col-md-1 col-sm-1 col-xs-1">
-                                                <span class="myState" style="background-color: #a47e3c">欠费</span>
+                                                <span class="myState" style="background-color: #7A67BB">欠费</span>
                                             </div>
                                             <div class="col-md-1 col-sm-1 col-xs-1">
                                                 <span class="myState" style="background-color: #b1dd94">其他</span>
@@ -218,14 +218,14 @@
                     var state = house.state;
                     var id = "#" + house.floorNumber + "-" + parseInt(house.houseNumber / 10) % 10 + "-" + house.houseNumber % 10;
                     switch (state) {
-                        case 0 : $(id).css("background-color", "#4B0082"); break;
+                        case 0 : $(id).css("background-color", "#F17060"); break;
                         case 1 : $(id).css("background-color", "#EEC591"); break;
-                        case 2 : $(id).css("background-color", "#953b39"); break;
-                        case 3 : $(id).css("background-color", "#a47e3c"); break;
+                        case 2 : $(id).css("background-color", "#14C1d7"); break;
+                        case 3 : $(id).css("background-color", "#7A67BB"); break;
                         case 4 : $(id).css("background-color", "#b1dd94"); break;
                         default: break;
                     }
-                    console.log(id);
+                    // console.log(id);
                 });
            }
         });

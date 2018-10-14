@@ -81,7 +81,4 @@ public class JsonUtil {
 
     private  JsonUtil(){}
 
-    public static void main(String[] args) {
-
-    }
 }

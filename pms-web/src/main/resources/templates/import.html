@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>物业管理系统</title>
+
+        <!-- Mobile Metas -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" />
+
+        <link th:href="@{/css/jquery.mmenu.css}" rel="stylesheet" />
+        <link th:href="@{/css/style.css}" rel="stylesheet" />
+        <link th:href="@{/css/add_style.css}" rel="stylesheet" />
+        <link th:href="@{/css/bootstrap-directional-buttons.css}" rel="stylesheet" />
+    </head>
+    <body>
+
+        <!-- Header-->
+        <div th:replace="menu/header::header"></div>
+
+        <!-- Start: Content -->
+        <div class="container-fluid content">
+            <div class="row">
+                <!-- Sidebar -->
+                <div th:replace="menu/sidebar::sidebar"></div>
+
+                <!-- Main Page -->
+                <div class="main ">
+                    <!-- Page Header -->
+                    <div class="page-header">
+                        <div class="pull-left">
+                            <ol  id="headPath" class="breadcrumb visible-sm visible-md visible-lg">
+                                <li><a href="index.html"><i class="icon fa fa-home"></i>主页</a></li>
+                                <li class="active"><i class="fa fa-copy"></i>信息备份</li>
+                                <li class="active"><i class="fa fa-anchor"></i>信息导入</li>
+                            </ol>
+                        </div>
+                        <div class="pull-right">
+                            <h2 id="rightContent">信息导入</h2>
+                        </div>
+                    </div>
+                    <!-- End Page Header -->
+                    <div class="import-container">
+                        信息导入
+                    </div>
+                </div>
+                <!-- End Main Page -->
+
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="https://cdn.bootcss.com/jQuery.mmenu/4.3.1/js/jquery.mmenu.min.js"></script>
+        <script th:src="@{/js/core.min.js}"></script>
+        <script th:src="@{/js/pages/index.js}"></script>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            function doAs(index){
+                var indexStr;
+                for(var i = 1; i <= 3; i++){
+                    indexStr = ".backup-" + i;
+                    $(indexStr).css("width", "20%");
+                }
+                indexStr = ".backup-" + index;
+                $(indexStr).css("width", "30%");
+            }
+            $(document).ready(function(){
+                var fields = [[${fields}]];
+                console.log(fields);
+            });
+            /*]]>*/
+        </script>
+    </body>
+</html>

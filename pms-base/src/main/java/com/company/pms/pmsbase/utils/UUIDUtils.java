@@ -42,14 +42,14 @@ public class UUIDUtils {
         return uuid[0]+uuid[4];
     }
 
-    public static void main(String[] args) {
-        System.out.println("UUID32: " + UUIDUtils.getUUID());  //UUID
-        System.out.println("UUID4: " + UUIDUtils.getUUID4());  //UUID
-        System.out.println("UUID8: " + UUIDUtils.getUUID8());  //UUID
-        System.out.println("UUID12: " + UUIDUtils.getUUID12());  //UUID
-        System.out.println("UUID16: " + UUIDUtils.getUUID16());  //UUID
-        System.out.println("自定义ID: " + UUIDUtils.getRandomId(32).toLowerCase());  //自定义ID生成器
-    }
+//    public static void main(String[] args) {
+//        System.out.println("UUID32: " + UUIDUtils.getUUID());  //UUID
+//        System.out.println("UUID4: " + UUIDUtils.getUUID4());  //UUID
+//        System.out.println("UUID8: " + UUIDUtils.getUUID8());  //UUID
+//        System.out.println("UUID12: " + UUIDUtils.getUUID12());  //UUID
+//        System.out.println("UUID16: " + UUIDUtils.getUUID16());  //UUID
+//        System.out.println("自定义ID: " + UUIDUtils.getRandomId(32).toLowerCase());  //自定义ID生成器
+//    }
 
     private final static char[] digits = {'0', '1', '2', '3', '4', '5', '6', '7', '8',
             '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',

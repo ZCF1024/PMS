@@ -40,8 +40,8 @@ public class MD5Util {
 
     private MD5Util(){ }
 
-    public static void main(String[] args) {
-        System.out.println(getMD5("201608040229"));
-//        System.out.println(getMD5("201608040229" + "10465" + "9726"));
-    }
+//    public static void main(String[] args) {
+//        System.out.println(getMD5("201608040229"));
+////        System.out.println(getMD5("201608040229" + "10465" + "9726"));
+//    }
 }

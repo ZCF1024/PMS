@@ -30,7 +30,7 @@ public class UpdateUtils {
         PropertyDescriptor[] pds = srcBean.getPropertyDescriptors();  //获得srcBean的属性描述器(包含source的所有属性)
         Set<String> emptyName = new HashSet<>();
         for(PropertyDescriptor pd : pds) {
-            System.out.println(pd.getName());
+            // System.out.println(pd.getName());
             Object value = srcBean.getPropertyValue(pd.getName());
             if (value == null) {
                 emptyName.add(pd.getName());

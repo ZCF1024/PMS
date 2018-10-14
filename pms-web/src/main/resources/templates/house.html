@@ -44,7 +44,7 @@
                 </div>
             </div>
             <!-- End Page Header -->
-            <div class="center-block panel panel-info " style="min-height:520px;width:100%">
+            <div class="center-block panel panel-info " style="min-height:520px; width:100%">
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         房屋信息列表
@@ -218,7 +218,7 @@
                         <div id="modal-state">
                             <label class="radio-inline" style="padding-left: 30px;" title="注意" data-container="body" data-toggle="popover"
                                    data-placement="top" data-content="请先置空租户ID">
-                                <input type="radio" name="state" value="0" style="margin-left: -30px" checked="checked" />
+                                <input type="radio" name="state" value="0" style="margin-left: -30px" />
                                 <span>待租</span>
                             </label>
                             <label class="radio-inline" title="注意" data-container="body" data-toggle="popover"
@@ -437,6 +437,7 @@
 
     function updateHouse() {
         var id = $("#modal-submit").prop("data-id");
+        console.log("state: " + $("#modal-state").find("input[name='state']").val());
         $.ajax({
             url: [[@{/api/house/}]] + id,
             type: 'put',

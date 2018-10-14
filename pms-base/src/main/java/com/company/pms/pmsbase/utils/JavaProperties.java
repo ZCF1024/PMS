@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class JavaProperties {
 
-    public static void main(String[] args) {
+    public static void getProperties() {
 
         Properties p = System.getProperties();
 
@@ -49,8 +49,6 @@ public class JavaProperties {
         for(Object obj : keySet){
             System.out.println("System Property: {"+obj.toString()+","+System.getProperty(obj.toString())+"}");
         }
-
     }
-
 
 }

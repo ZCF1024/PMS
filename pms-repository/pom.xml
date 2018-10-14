@@ -15,6 +15,7 @@
         <groupId>com.company.pms</groupId>
         <artifactId>pms</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <properties>
@@ -48,6 +49,5 @@
         </dependency>
 
     </dependencies>
-
 
 </project>
