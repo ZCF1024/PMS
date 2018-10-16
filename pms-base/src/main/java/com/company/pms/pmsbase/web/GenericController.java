@@ -11,6 +11,7 @@ import com.company.pms.pmsbase.service.GenericManager;
 import com.company.pms.pmsbase.utils.ResultUtil;
 import com.company.pms.pmsbase.utils.UpdateUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,9 @@ public abstract class GenericController<T extends BaseEntity, PK extends Seriali
 	protected Pageable pageable;
 	protected int pageNumber = 0;
 	protected int pageSize = 20;
+
+	@Value("${save_file_path}")
+	protected String SAVE_PATH;
 
 	/**
 	 * @param model

@@ -1,4 +1,33 @@
-﻿.backup-container {
+﻿.mexport-3 .submit {
+    float: right;
+    width: 30%;
+    margin-right: 5%;
+    margin-top: 10px;
+}
+
+.fields-table {
+    table-layout: fixed;
+    width: 90%;
+    padding-top: 0px;
+    margin: auto;
+}
+
+.fields-name {
+    background-color: #DDDDDD;
+    font-size: 15px;
+    text-align: center;
+    width: 90%;
+    color: #ffffff;
+    margin-left: 5%;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+}
+
+.fields-name:hover {
+    box-shadow: 0 0 4px rgba(0,0,0,.2);
+}
+
+.mexport-container {
     height: 600px;
     width: 96%;
     margin-top: 10px;
@@ -10,55 +39,63 @@
     box-shadow: 0 0 4px rgba(0,0,0,.2);
 }
 
-.backup-head {
+.mexport-head {
     height: 50px;
     width: 100%;
     padding: 7px;
     background-color: #ffffff;
 }
 
-.backup-content {
+.mexport-content {
     margin-left: 13px;
     padding-top: 5px;
     padding-left: 36px;
     width: 100%;
 }
 
-.backup-content>div {
+.mexport-content>div {
     border-right: 2px solid #000000;
-    width: 20%;
+    width: 25%;
     height: 513px;
     float: left;
+    padding-top: 4px;
     margin-right: 13px;
     border: 2px solid #ccc;
     border-radius: 3px;
     box-shadow: 0 0 4px rgba(0,0,0,.2);
 }
 
-.backup-content span {
+.mexport-content div>span {
+    padding-left: 4px;
+    margin-bottom: 4px;
+    font-weight: bolder;
     font-size: 15px;
 }
 
-.backup-content ul {
+.mexport-content ul {
+    padding: 0px;
+    width: 90%;
+    margin: auto;
     padding-top: 5px;
 }
 
-.backup-content li {
+.mexport-content li {
     list-style: none;
     font-size: 15px;
+    margin-bottom: 4px;
 }
 
-.backup-head li{
-    width: 20%;
+.mexport-head li{
+    width: 25%;
     margin-right: 1%;
     list-style: none;
 }
 
-.backup-head li .btn{
+.mexport-head li .btn{
     width: 100%;
 }
 
-.backup-head ul>li{
+.mexport-head ul>li{
     height: 100%;
     list-style: none;
     float: left;

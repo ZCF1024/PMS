@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -29,9 +31,6 @@ import java.util.List;
 public class EmployeeAPIController extends GenericController<Employee, Long, EmployeeManager> {
 
 	private final Logger logger = LoggerFactory.getLogger(EmployeeAPIController.class);
-
-	@Value("${save_file_path}")
-	private String SAVE_PATH;
 
 	private EmployeeManager employeeManager;
 
@@ -94,14 +93,20 @@ public class EmployeeAPIController extends GenericController<Employee, Long, Emp
     }
 
 	@GetMapping("export")
-	public ResponseEntity<byte[]> export(){
+	public ResponseEntity<byte[]> export(@RequestParam(name = "fields") String fields){
+
+		String[] tmp= fields.split(",");
+		List<Integer> fieldList = new ArrayList<>();
+		for(String index : tmp){
+			fieldList.add(Integer.valueOf(index));
+		}
 		try{
 			List<Employee> list = this.employeeManager.findAll(false);
 		    String fileName = SAVE_PATH + "员工信息表.xls";
 			OutputStream out = new FileOutputStream(new File(fileName));
 
 			ExportExcelUtil<Employee> exportExcel = new ExportExcelUtil<>();
-			exportExcel.exportExcel("员工信息", FieldUtils.EMPLOYEE_FIELDS, list, out, null);
+			exportExcel.exportExcel("员工信息", FieldUtils.EMPLOYEE_FIELDS, list, out, fieldList);
 
 			//将导出的文件输出到响应的信息中（即为下载）
 			HttpHeaders headers = new HttpHeaders();

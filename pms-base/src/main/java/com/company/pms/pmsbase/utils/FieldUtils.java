@@ -1,5 +1,8 @@
 package com.company.pms.pmsbase.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Author zcf
  * @Create 2018/8/1 13:40
@@ -34,4 +37,40 @@ public class FieldUtils {
     public static final String[][] HOUSE_FIELDS = {{"id", "ID"}, {"address", "所在地址"}, {"area", "面积"}, {"price", "价格"},
             {"state", "待租", "使用中", "在建", "欠费", "正常"}, {"introduce", "房屋简介"}, {"customerId", "用户ID"},{"entityType", "实体类型"},
             {"dateCreated", "开放时间"}, {"dateModified", "修改时间"}, {"deleted", "状态", "废弃", "正常"}};
+
+    public static List<String> getEmployeeFieldNames() {
+        return getFieldsName(EMPLOYEE_FIELDS);
+    }
+
+    public static List<String> getCustomerFieldNames() {
+        return getFieldsName(CUSTOMER_FIELDS);
+    }
+
+    public static List<String> getCarbarnFieldNames() {
+        return getFieldsName(CARBARN_FIELDS);
+    }
+
+    public static List<String> getChargeFieldNames() {
+        return getFieldsName(CHARGE_FIELDS);
+    }
+
+    public static List<String> getComplainFieldNames() {
+        return getFieldsName(COMPLAIN_FIELDS);
+    }
+
+    public static List<String> getDeviceFieldNames() {
+        return getFieldsName(DEVICE_FIELDS);
+    }
+
+    public static List<String> getHouseFieldNames() {
+        return getFieldsName(HOUSE_FIELDS);
+    }
+
+    private static List<String> getFieldsName(String[][] fieldArray) {
+        List<String> fields = new ArrayList<>();
+        for(int i = 0; i<fieldArray.length; i++){
+            fields.add(fieldArray[i][1]);
+        }
+        return fields;
+    }
 }

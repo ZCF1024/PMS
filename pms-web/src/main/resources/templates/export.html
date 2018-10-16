@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>物业管理系统</title>
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" />
+
+    <link th:href="@{/css/jquery.mmenu.css}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <link th:href="@{/css/add_style.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap-directional-buttons.css}" rel="stylesheet" />
+</head>
+<body>
+
+<!-- Header-->
+<div th:replace="menu/header::header"></div>
+
+<!-- Start: Content -->
+<div class="container-fluid content">
+    <div class="row">
+        <!-- Sidebar -->
+        <div th:replace="menu/sidebar::sidebar"></div>
+
+        <!-- Main Page -->
+        <div class="main ">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="pull-left">
+                    <ol  id="headPath" class="breadcrumb visible-sm visible-md visible-lg">
+                        <li><a href="index.html"><i class="icon fa fa-home"></i>主页</a></li>
+                        <li class="active"><i class="fa fa-copy"></i>信息备份</li>
+                        <li class="active"><i class="fa fa-anchor"></i>信息导出</li>
+                    </ol>
+                </div>
+                <div class="pull-right">
+                    <h2 id="rightContent">信息导出</h2>
+                </div>
+            </div>
+            <!-- End Page Header -->
+            <div class="mexport-container">
+                <div class="mexport-head">
+                    <ul>
+                        <li class="mexport-1"><button class="btn btn-info btn-arrow-right" onclick="doAs(1)">第一步</button></li>
+                        <li class="mexport-2"><button class="btn btn-info btn-arrow-right" onclick="doAs(2)">第二步</button></li>
+                        <li class="mexport-3"><button class="btn btn-info btn-arrow-right" onclick="doAs(3)">第三步</button></li>
+                    </ul>
+                </div>
+                <div class="mexport-content">
+                    <div class="mexport-1">
+                        <span>请选择导出的信息： </span>
+                        <ul>
+                            <li>
+                                <button class="btn btn-info btn-block" onclick="sfields(this, 'employee')">
+                                    <i class="fa fa-hand-o-right"></i> 员工信息 <i class="fa fa-hand-o-left"></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-info btn-block" onclick="sfields(this, 'customer')">
+                                    <i class="fa fa-hand-o-right"></i> 客户信息 <i class="fa fa-hand-o-left"></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-info btn-block" onclick="sfields(this, 'device')">
+                                    <i class="fa fa-hand-o-right"></i> 设备信息 <i class="fa fa-hand-o-left"></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-info btn-block" onclick="sfields(this, 'house')">
+                                    <i class="fa fa-hand-o-right"></i> 房屋信息 <i class="fa fa-hand-o-left"></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-info btn-block" onclick="sfields(this, 'carbarn')">
+                                    <i class="fa fa-hand-o-right"></i> 车库信息 <i class="fa fa-hand-o-left"></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-info btn-block" onclick="sfields(this, 'charge')">
+                                    <i class="fa fa-hand-o-right"></i> 费用信息 <i class="fa fa-hand-o-left"></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-info btn-block" onclick="sfields(this, 'complain')">
+                                    <i class="fa fa-hand-o-right"></i> 投诉信息 <i class="fa fa-hand-o-left"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mexport-2" hidden="true">
+                        <span>请选择导出字段：</span>
+                        <div style="padding-top: 5px;">
+                            <table class="table table-bordered fields-table" style="clear: both">
+                                <tbody id="fields-table-body">
+                                    <tr>
+                                        <td width="50%"><div class="fields-name"> field </div></td>
+                                        <td><div class="fields-name"> field </div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="mexport-3"  hidden="true">
+                        <span>以下字段将被导出： </span>
+                        <div style="padding-top: 5px;">
+                            <table class="table table-bordered fields-table" style="clear: both">
+                                <tbody>
+                                    <tr>
+                                        <td width="50%">field</td>
+                                        <td>field</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="submit"><button class="btn btn-primary btn-block" onclick="mexport(this)">导出<a></a></button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Main Page -->
+
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/jQuery.mmenu/4.3.1/js/jquery.mmenu.min.js"></script>
+<script th:src="@{/js/core.min.js}"></script>
+<script th:src="@{/js/pages/index.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var fields = [[${fields}]];
+
+    var curentity = "";
+
+    function doAs(index){
+        var target = $(".mexport-" + index);
+        if(target.is(":hidden"))
+            return;
+        var indexStr;
+        for(var i = 1; i <= 3; i++){
+            indexStr = ".mexport-" + i;
+            $(indexStr).css("width", "25%");
+        }
+        target.css("width", "30%");
+    }
+
+    function sfields(elem, name){
+        $(".mexport-1").find("i").hide();
+        curentity = name;
+        $(elem).find("i").show();
+        var tmp = fields[name];
+        var htmlStr = "";
+        for(var i = 0; i < tmp.length; i++){
+            htmlStr += "<tr><td width=\"50%\"><div class=\"fields-name\" checked=\"false\" value=\""+ i +"\">" + tmp[i++] + "</div>";
+            if(i>= tmp.length){
+                htmlStr +="</td></tr>";
+                break;
+            }
+            htmlStr += "</td><td><div class=\"fields-name\" checked=\"false\" value=\""+ i +"\">" + tmp[i] + "</div></td></tr>";
+        }
+        $(".mexport-2").removeAttr("hidden");
+        doAs(2);
+        $("#fields-table-body").html(htmlStr);
+    }
+
+    function showInmexport3(){
+        var tmp = [];
+        var values = [];
+        $(".mexport-2").find(".fields-name").each(function() {
+            var cur = $(this);
+            if(cur.prop("checked")) {
+                tmp.push(cur.text());
+            } else{
+                values.push(cur.attr("value"));
+            }
+        });
+
+        var htmlStr = "";
+        for(var i = 0; i < tmp.length; i++){
+            htmlStr += "<tr><td width=\"50%\"><div>" + tmp[i++] + "</div>";
+            if(i>= tmp.length){
+                htmlStr +="</td></tr>";
+                break;
+            }
+            htmlStr += "</td><td><div>" + tmp[i] + "</div></td></tr>";
+        }
+        $(".mexport-3 .fields-table tbody").html(htmlStr);
+        if($(".mexport-3").is(":hidden")){
+            $(".mexport-3").removeAttr("hidden");
+        }
+        return values;
+    }
+
+    function mexport () {
+        $(this).prop("disabled", true);
+        var exfields = showInmexport3();
+        console.log(exfields.toString());
+        url = [[@{/api/}]] + curentity + "/export?fields=" +  exfields.toString();
+        window.location.href = url; // 在单前窗口打开此下载链接
+        //window.open(url); // 在新窗口打开此下载链接
+        // $.ajax({
+        //     url: [[@{/api/}]] + curentity + "/export",
+        //     type: 'get',
+        //     data: {'fields': exfields},
+        //     traditional: true,
+        //     contentType: "application/json; charset=utf-8",
+        //     dataType: 'JSON',
+        //     success: function (data){
+        //         console.log(data.value);
+        //         $(this).prop("disabled", true);
+        //     },
+        //     error: function (response){
+        //         $(this).prop("disabled", true);
+        //         //console.log(response);
+        //     }
+        // });
+    }
+
+    $(document).ready(function(){
+        $(".mexport-1").css("width", "30%");
+        $(".mexport-1").find("i").hide();
+        $(".mexport-2").on('click', '.fields-name', function () {
+            var cur = $(this);
+            if(cur.prop("checked")){
+                cur.prop("checked", false);
+                cur.css("background-color", "#DDDDDD");
+                cur.css("border", "1px solid #ccc");
+                cur.html(cur.text())
+            } else{
+                cur.prop("checked", true);
+                cur.css("background-color", "#2E86C1");
+                cur.css("border", "1px solid #2E86C1");
+                cur.html("<i class=\"fa fa-check-square-o\"></i> " + cur.text());
+            }
+            showInmexport3();
+        });
+    });
+
+    /*]]>*/
+</script>
+</body>
+</html>
